@@ -1,0 +1,72 @@
+ .word {
+     background: #a4161a;
+     width: 130px;
+     height: 30px;
+     border: transparent;
+     border-radius: 5px;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+     margin-right: 15px;
+
+     &.outlined {
+        background: #fff;
+        border: 1px solid;
+        border-color: #00b4d8;
+        color: #00b4d8;
+    }
+
+    &:not(:disabled):hover {
+        filter: brightness(0.9);
+    };
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+
+     >p {
+         color: #fff;
+         font-weight: bold;
+     }
+
+ };
+
+ .wordSelected {
+    background: #e5383b;
+    width: 130px;
+    height: 30px;
+    border: transparent;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    margin-right: 15px;
+
+
+    &.outlined {
+       background: #fff;
+       border: 1px solid;
+       border-color: #00b4d8;
+       color: #00b4d8;
+   }
+
+   &:not(:disabled):hover {
+       filter: brightness(0.9);
+   };
+
+   &:disabled {
+       opacity: 0.6;
+       cursor: not-allowed;
+   }
+
+
+    >p {
+        color: #fff;
+        font-weight: bold;
+    }
+
+}

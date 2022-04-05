@@ -1,0 +1,16 @@
+    #container {
+      background: #660708;
+      display: flex;
+      align-items: center;
+      height: 100vh;
+      justify-content: center;
+      flex-direction: column;
+      >h1 {
+          color: #FFF;
+          font-size: 50px;
+          margin-top: -30px;
+          margin-bottom: 50px;
+      }
+      
+
+    };
