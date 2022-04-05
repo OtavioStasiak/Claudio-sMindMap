@@ -1,10 +1,11 @@
-#container {
-    background: #d3d3d3;
+.container {
     display: flex;
     align-items: center;
     height: 100vh;
     padding-top: 5%;
     flex-direction: column;
+    background: #fff;
+
     >h1 {
         color: #660708;
         font-size: 50px;
@@ -45,6 +46,7 @@
     };
 
     .word-field {
+        background-color: #fff;
         display: flex;
         width: 100%;
         align-items: center;
@@ -65,6 +67,7 @@
     };
 
     .continue-footer {
+        background-color: #fff;
         height: 80px;
         width: 100%;
         display: flex;

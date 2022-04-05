@@ -1,6 +1,8 @@
-button {
+.button {
     height: 50px;
+    width: 250px;
     border-radius: 8px;
+    margin-top: 15px;
     background: #161a1d;
     color: #fff;
     padding: 0 32px;
@@ -31,7 +33,52 @@ button {
     }
 
     &:not(:disabled):hover {
-        filter: brightness(0.9);
+        filter: brightness(0.7);
+    };
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+};
+
+.padlockButton {
+    height: 50px;
+    width: 250px;
+    border-radius: 8px;
+    margin-top: 15px;
+    background: #161a1d;
+    color: #fff;
+    padding: 0 32px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+
+    #title {
+        font-weight: bold;
+    }
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    border: 0;
+
+    transition: filter 0.2s;
+
+    >img {
+        margin-right: 8px;
+    }
+
+    &.outlined {
+        background: #fff;
+        border: 1px solid;
+        border-color: #00b4d8;
+        color: #00b4d8;
+    }
+
+    &:not(:disabled):hover {
+        filter: brightness(0.7);
     };
 
     &:disabled {
@@ -40,3 +87,4 @@ button {
     }
 
 }
+

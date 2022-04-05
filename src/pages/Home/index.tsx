@@ -1,11 +1,16 @@
 import { WordSelection } from '../../components/WordSelection';
 import arrowRight from '../../assets/images/right-arrow.svg';
-
+import {useHistory} from 'react-router-dom';
 import './styles.scss';
 
 export function Home(){
+    const history = useHistory();
+
+    function handleGoToMindMap(){
+        history.push('/mind-map/');
+    };
     return(
-        <div id="container">
+        <div className="container">
 
             <h1>Bem Vindo(a)!</h1>
 
@@ -67,7 +72,7 @@ export function Home(){
 
                 <h2>Palavras Selecionadas: 2</h2>
 
-                <button className="continue-button">
+                <button onClick={handleGoToMindMap} className="continue-button">
                     <p>Continuar</p>
                     <img src={arrowRight} color="#fff" />
                 </button>
