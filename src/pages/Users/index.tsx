@@ -14,7 +14,20 @@ export function Users(){
             <header className="welcome-header">
                 <p>Participantes</p>
             </header>
+
             <DrawerAdmin />
+
+            <div className="user-indicator">
+                <div className="division"/>  
+                <p>Foto</p> 
+                <div className="division"/> 
+                <p>Nome</p>
+                <div className="division"/> 
+                <p>E-mail</p> 
+                <div className="division"/>
+                <p>Possui Mapa</p>
+                <div className="division"/>
+            </div>
 
             <div className="user-previews">
 
