@@ -1,20 +1,39 @@
+import { DrawerAdmin } from "../../components/DrawerAdmin";
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+
+import './styles.scss';
+
 export function Admin(){
     return(
-        <div>
+        <div className="admin-container">
 
-            <header>
-                <h1>Bem vindo Cláudio!</h1>
+            <header className="welcome-header">
+                <p>Bem vindo Cláudio!</p>
             </header>
+            <DrawerAdmin />
 
-            <h2>Mapas concluídos: 50</h2>
 
-            <div>
-                <p>Mapas mais recentes</p>
-            
+            <div className="content">
+                <div className="indicator-container">
+                    <p>Usuários: 50</p>
+                </div>
+
+                <div className="map-container">
+                    <p>Mapas Criados: 50</p>
+                </div>  
             </div>
 
-            <footer>
-                <p>Desenvolvido por Otávio Stasiak</p>
+            <div className="preview-indicator">
+                 <p>Mapas Mais Recentes</p>
+            </div>
+
+            <div className="previews">
+
+            </div>
+
+            <footer className="footer">
+                <p className="footer-title">Desenvolvido por Otávio Stasiak</p>
             </footer>
 
         </div>
