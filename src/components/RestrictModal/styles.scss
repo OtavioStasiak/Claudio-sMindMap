@@ -1,0 +1,65 @@
+.modal-close-button{
+    border-color: transparent;
+    background: transparent;
+}
+
+
+.modal_login_content {
+    width: 100;
+    height: 200px;
+    background-color: #29292e;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px, 0px, 0px, 10px;
+
+
+    >h2 {
+        color: #fff;
+        margin-bottom: 20px;
+        font-size: 30px;
+    };
+
+    >input {
+        margin-bottom: 20px;
+        width: 50%;
+        height: 35px;
+        padding-left: 10px;
+        border-radius: 5px;
+       
+
+        &:focus{
+            border-color: transparent;
+            border-width: 0px;
+        };
+    };
+
+    >button{
+        width: 50%;
+        height: 35px;
+        border-radius: 5px;
+        background: #660708;
+        border-color: transparent;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+
+        &.outlined {
+            background: #fff;
+            border: 1px solid;
+            border-color: #00b4d8;
+            color: #00b4d8;
+        }
+     
+        &:not(:disabled):hover {
+            filter: brightness(0.9);
+        };
+     
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+}

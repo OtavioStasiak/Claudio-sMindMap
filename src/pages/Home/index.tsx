@@ -1,10 +1,14 @@
+import { useState } from 'react';
+import {useHistory} from 'react-router-dom';
+
 import { WordSelection } from '../../components/WordSelection';
 import arrowRight from '../../assets/images/right-arrow.svg';
-import {useHistory} from 'react-router-dom';
+
 import './styles.scss';
 
 export function Home(){
     const history = useHistory();
+    const [wordsSelected, setWordsSelected] = useState(0);
 
     function handleGoToMindMap(){
         history.push('/mind-map/');
@@ -25,52 +29,36 @@ export function Home(){
             </div>
 
             <div className='word-field'>
-
-                <div className='word-lines'>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                </div>
-
-                <div className='word-lines'>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                </div>
-
-                <div className='word-lines'>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                </div>
-
-                <div className='word-lines'>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                </div>
-
-                <div className='word-lines'>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                    <WordSelection/>
-                </div>
-               
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Felicidade'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Tristeza'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Lanche'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Coca Gelada salva'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Big Mac'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Brinquedo'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)}word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)}word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)}word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)}word='Teste'/>
+                    <WordSelection onSelectWord={(value) => setWordsSelected(wordsSelected + value)} word='Teste'/>               
             </div>
 
             <footer className="continue-footer">
 
-                <h2>Palavras Selecionadas: 2</h2>
+                <h2>Palavras Selecionadas: {wordsSelected}</h2>
 
                 <button onClick={handleGoToMindMap} className="continue-button">
                     <p>Continuar</p>

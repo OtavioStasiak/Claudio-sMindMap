@@ -1,19 +1,24 @@
 import { LoginButton } from "../../components/LoginButton";
 import Lottie from 'react-lottie';
 import { useHistory } from 'react-router-dom';
-
 import animation from '../../animations/login.json';
+
+import { useAuth } from "../../hooks/useAuth";
 import './styles.scss';
+import { useState } from "react";
+import { RestrictModal } from "../../components/RestrictModal";
 
 export function Login(){
     const history = useHistory();
+    const { signInWithGoogle, user } = useAuth();
+    const [visible, setVisible] = useState(false);
 
-    function handleLogin(){
-        history.push('/select-words/');
+    async function handleLogin(){
+        signInWithGoogle()
     };
 
     function handleLoginAdmin(){
-        history.push('/admin/');
+        setVisible(true);
     };
 
     return(
@@ -32,6 +37,7 @@ export function Login(){
                 <LoginButton onClick={handleLogin} title="Entrar com Google" />
                 <LoginButton isAdmin onClick={handleLoginAdmin} title="Acesso Restrito" />
 
+                <RestrictModal visible={visible} onRequestClose={() => setVisible(false)}/>
 
         </div>
     )

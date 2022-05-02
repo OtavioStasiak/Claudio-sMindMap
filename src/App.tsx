@@ -5,12 +5,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Admin } from './pages/Admin';
 import { MindMap } from './pages/MindMap';
 import { Users } from './pages/Users';
+import { AuthProvider } from './hooks/useAuth';
 
 function App() {
 
   return (
     <BrowserRouter>
-
+      <AuthProvider>
         <Switch>
           <Route path={'/'} exact component={Login} />
           <Route path={'/select-words/'} component={Home} />
@@ -18,8 +19,8 @@ function App() {
           <Route path={'/mind-map/'} component={MindMap} />
           <Route exact path={'/admin/users/'} component={Users} />
         </Switch>
-        
-   </BrowserRouter>
+      </AuthProvider>
+  </BrowserRouter>
   );
 }
 
