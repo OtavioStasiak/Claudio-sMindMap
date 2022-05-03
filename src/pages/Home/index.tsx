@@ -1,18 +1,33 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 
+import Modal from "react-modal";
+
 import { WordSelection } from '../../components/WordSelection';
+
 import arrowRight from '../../assets/images/right-arrow.svg';
+import sicrediImg from '../../assets/images/logo-sicredi.png';
+import unimedImg from '../../assets/images/unimed-logo.png';
 
 import './styles.scss';
 
 export function Home(){
     const history = useHistory();
     const [wordsSelected, setWordsSelected] = useState(0);
+    const [visible, setVisible] = useState(true);
 
     function handleGoToMindMap(){
         history.push('/mind-map/');
     };
+
+    function onSelectSicredi(){
+        setVisible(false);
+    };
+
+    function onSelectUnimed(){
+        setVisible(false);
+    };
+    
     return(
         <div className="container">
 
@@ -66,6 +81,22 @@ export function Home(){
                 </button>
 
             </footer>
+
+            <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
+               <div className='selection-brand'>
+                    <h2 className='selection-brand-title'>Escolha uma Marca:</h2>
+
+                    <div className='buttons-select-brand'>
+                        <button onClick={onSelectSicredi} className='button-brand-select'>
+                            <img src={sicrediImg} alt='Logo do Banco Sicredi' />
+                        </button>
+
+                        <button onClick={onSelectUnimed} className='button-brand-select'>
+                            <img className='unimed'  src={unimedImg} alt='Logo do Plano de Saúde Unimed' />
+                        </button>
+                    </div>
+                </div>
+            </Modal>
            
         </div>
     )
