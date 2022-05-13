@@ -1,10 +1,20 @@
 import React, {useState, useEffect, createContext, useContext} from "react";
 import { signInWithPopup } from "firebase/auth";
-import {provider, auth} from '../services/firebase';
+import {provider, auth, wordsRef, usersRef} from '../services/firebase';
 import { useHistory } from "react-router-dom";
+import { addDoc } from 'firebase/firestore';
+
+
+type userData = {
+  id: string;
+  name: string;
+  avatar: string;
+  email: string | null;
+}
+
 type AuthContextData = {
     signInWithGoogle: () => void;
-    user: {id: string, name: string, avatar: string};
+    user: {id: string, name: string, avatar: string, email: string | null};
   };
 
   type AuthProviderProps = {
@@ -15,7 +25,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
 
-      const [user, setUser] = useState({id: '', name: '', avatar: ''});
+      const [user, setUser] = useState<userData>({} as userData);
       const history = useHistory();
       
       async function signInWithGoogle() {
@@ -23,7 +33,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         const result = await signInWithPopup(auth, provider);
               
         if(result.user) {
-            const {displayName, photoURL, uid} = result.user;
+            const {displayName, photoURL, uid, email} = result.user;
 
             if(!displayName || !photoURL) {
                 throw new Error('Missing information from Google Account.');
@@ -32,16 +42,21 @@ function AuthProvider({ children }: AuthProviderProps) {
             setUser({
                 id: uid,
                 name: displayName,
-                avatar: photoURL
+                avatar: photoURL,
+                email: email
             });
-            
-            history.push('/select-words/')
+            addDoc(usersRef, {
+              id: uid,
+              name: displayName,
+              avatar: photoURL,
+              email: email
+            }).then(() => history.push('/select-words/'))
         };
-    };
+      } ;
        
       useEffect(() => {const unsubscribe = auth.onAuthStateChanged(user => {
         if (user){
-          const {displayName, photoURL, uid} = user;
+          const {displayName, photoURL, uid, email} = user;
 
           if(!displayName || !photoURL) {
             throw new Error('Missing information from Google Account.');
@@ -50,7 +65,8 @@ function AuthProvider({ children }: AuthProviderProps) {
         setUser({
             id: uid,
             name: displayName,
-            avatar: photoURL
+            avatar: photoURL,
+            email: email
         });
         
         return () => {
