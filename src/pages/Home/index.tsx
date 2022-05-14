@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
-import { addDoc } from 'firebase/firestore';
-
+import { addDoc, query, where } from 'firebase/firestore';
+import { positions } from '../../services/positions';
 import Modal from "react-modal";
 import {firestore, mindMapRef, wordsRef} from '../../services/firebase';
 import { WordSelection } from '../../components/WordSelection';
@@ -23,39 +23,43 @@ type wordsData = {
 
 export function Home(){
     const history = useHistory();
-    const [wordsSelected, setWordsSelected] = useState(0);
-    const [visible, setVisible] = useState(false);
     const { user } = useAuth(); 
+    const [wordsSelected, setWordsSelected] = useState(0);
+    const [visible, setVisible] = useState(true);
 
-    function onSelectSicredi(){
+    function onSelectSicredi(brand: string){
+        fetchWords(brand);
         setVisible(false);
     };
 
-    function onSelectUnimed(){
+    function onSelectUnimed(brand: string){
+        fetchWords(brand);
         setVisible(false);
     };
 
     const [words, setWords] = useState<wordsData>();
 
-    async function fetchWords(){
-        const response = await getDocs(wordsRef)
+    async function fetchWords(brand: string){
+        const q = query(wordsRef, where('brand', '==', brand ))
+        const response = await getDocs(q)
         const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
 
         setWords(data);
     }
-    
-    useEffect(() => {fetchWords()}, []);
+
 
     const [wordSelected, setWordSelected] = useState<string []>([]);
 
     function DeleteWord(word: string){
         const wordsEditable = wordSelected;
         const indexToRemove = wordsEditable.findIndex(item => item === word);
+
         if(indexToRemove >= 0){
             wordsEditable.splice(indexToRemove, 1);
             setWordSelected(wordsEditable);
         };
     };
+
     const width = 50%window.innerWidth;
     const height = 50%window.innerHeight;
     const initialElements = [
@@ -67,10 +71,7 @@ export function Home(){
         data: {
             label: item
         },
-        position:{
-            x: Math.random() * ((width * 6) - (width *3)) + (width * 2),
-            y: Math.random() * ((height *3) - (height - (height * 2))) +(height *2)  
-        }
+        position: positions[index].position
     }});
 
     const finalElements = initialElements.concat(...otherElements);
@@ -129,11 +130,11 @@ export function Home(){
                     <h2 className='selection-brand-title'>Escolha uma Marca:</h2>
 
                     <div className='buttons-select-brand'>
-                        <button onClick={onSelectSicredi} className='button-brand-select'>
+                        <button onClick={() => onSelectSicredi('Sicredi')} className='button-brand-select'>
                             <img src={sicrediImg} alt='Logo do Banco Sicredi' />
                         </button>
 
-                        <button onClick={onSelectUnimed} className='button-brand-select'>
+                        <button onClick={() => onSelectUnimed('Unimed')} className='button-brand-select'>
                             <img className='unimed'  src={unimedImg} alt='Logo do Plano de Saúde Unimed' />
                         </button>
                     </div>

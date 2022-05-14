@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
 import {getDocs, query, where} from 'firebase/firestore';
 import './styles.scss';
 import { mindMapRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
+import { CustomEdge } from '../../components/CustomEdge';
 
 const width = 50%window.innerWidth;
 const height = 50%window.innerHeight;
@@ -49,28 +50,34 @@ export function MindMap(){
     const [elements, setElements] = useState(initialElements);
     const initialMap = words !== undefined ? words[0]?.initialMap : [];
     useEffect(() => {setElements(initialMap as any)}, [words])
-
+    const edgeTypes = {
+        buttonedge: CustomEdge,
+    };
     function onConnect(params: any){
+        console.log(params)
         const elementsAlterated = elements;
-        const test = addEdge(params, elementsAlterated!);
+        const test = addEdge(Object.assign(params, {label:"I", labelBgPadding: [8, 4], type: 'buttonedge'}), elementsAlterated!);
         setElements(test as any);
     };
 
     function onLoad(reactFlowInstance: any){
         reactFlowInstance.fitView();
     };
+ 
 
     return(
-    <div className='mindmapContainer'>
-        <ReactFlow
-     
-        onLoad={onLoad} 
-        elements={elements!} 
-        onConnect={onConnect} > 
-            <MiniMap /> 
-            <Controls />
-        </ReactFlow>   
-    </div>
-
-)
+        <div className='mindmapContainer'>
+            <ReactFlow
+            edgeTypes={edgeTypes}
+            onLoad={onLoad} 
+            elements={elements!} 
+            onConnect={onConnect} > 
+                <MiniMap /> 
+                <Controls />
+            </ReactFlow>  
+            <button className='ContinueButton'>
+                CONTINUAR
+            </button> 
+        </div>
+    )
 }

@@ -2,7 +2,7 @@ import React, {useState, useEffect, createContext, useContext} from "react";
 import { signInWithPopup } from "firebase/auth";
 import {provider, auth, wordsRef, usersRef} from '../services/firebase';
 import { useHistory } from "react-router-dom";
-import { addDoc } from 'firebase/firestore';
+import { addDoc, query, where, getDocs } from 'firebase/firestore';
 
 
 type userData = {
@@ -27,7 +27,9 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       const [user, setUser] = useState<userData>({} as userData);
       const history = useHistory();
-      
+    
+
+
       async function signInWithGoogle() {
 
         const result = await signInWithPopup(auth, provider);
@@ -45,12 +47,20 @@ function AuthProvider({ children }: AuthProviderProps) {
                 avatar: photoURL,
                 email: email
             });
-            addDoc(usersRef, {
-              id: uid,
-              name: displayName,
-              avatar: photoURL,
-              email: email
-            }).then(() => history.push('/select-words/'))
+            const q = query(usersRef, where("email", '==', result.user.email));
+            const response = await getDocs(q);
+            const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
+
+            if(data.length === 0 ){
+              addDoc(usersRef, {
+                id: uid,
+                name: displayName,
+                avatar: photoURL,
+                email: email
+              }).then(() => history.push('/select-words/'))
+            }
+           
+            history.push('/select-words/')
         };
       } ;
        
