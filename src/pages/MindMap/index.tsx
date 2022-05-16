@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
-import {getDocs, query, where} from 'firebase/firestore';
+import {getDocs, query, where, updateDoc, collection, addDoc} from 'firebase/firestore';
 import './styles.scss';
-import { mindMapRef } from '../../services/firebase';
+import { finishedMapRef, mindMapRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { CustomEdge } from '../../components/CustomEdge';
+import { useEdge } from '../../hooks/useEdge';
 
 const width = 50%window.innerWidth;
 const height = 50%window.innerHeight;
@@ -34,6 +35,7 @@ type initialData = {
 export function MindMap(){
 
     const {user} = useAuth();
+    const {setMapActual, connectionForce} = useEdge();
 
     const [words, setWords] = useState<initialData>();
 
@@ -49,21 +51,31 @@ export function MindMap(){
 
     const [elements, setElements] = useState(initialElements);
     const initialMap = words !== undefined ? words[0]?.initialMap : [];
-    useEffect(() => {setElements(initialMap as any)}, [words])
+
+    useEffect(() => {setElements(initialMap as any)}, [words]);
+
     const edgeTypes = {
         buttonedge: CustomEdge,
     };
+
     function onConnect(params: any){
-        console.log(params)
         const elementsAlterated = elements;
-        const test = addEdge(Object.assign(params, {label:"I", labelBgPadding: [8, 4], type: 'buttonedge'}), elementsAlterated!);
+        const test = addEdge(Object.assign(params,
+             {label:"I", labelBgPadding: [8, 4], type: 'buttonedge', }), elementsAlterated!);
         setElements(test as any);
+        setMapActual(test);
     };
 
     function onLoad(reactFlowInstance: any){
         reactFlowInstance.fitView();
     };
- 
+
+    function onFinishMap(){
+        addDoc(finishedMapRef, {
+            map: elements,
+            force: connectionForce
+        });
+    };
 
     return(
         <div className='mindmapContainer'>
@@ -75,7 +87,7 @@ export function MindMap(){
                 <MiniMap /> 
                 <Controls />
             </ReactFlow>  
-            <button className='ContinueButton'>
+            <button onClick={onFinishMap} className='continue-button'>
                 CONTINUAR
             </button> 
         </div>

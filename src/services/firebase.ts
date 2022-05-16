@@ -18,4 +18,5 @@ export const firestore = getFirestore(app);
 export const wordsRef = collection(firestore, "Brand");
 export const usersRef = collection(firestore, "Users");
 export const mindMapRef = collection(firestore, "MindMap");
+export const finishedMapRef = collection(firestore, "FinishedMaps");
 export const provider = new GoogleAuthProvider();

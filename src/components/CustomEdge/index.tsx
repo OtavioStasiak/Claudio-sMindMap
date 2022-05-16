@@ -1,18 +1,23 @@
-import React from 'react';
-import { getBezierPath, getMarkerEnd, Position } from 'react-flow-renderer';
+import React, { useEffect, useState } from 'react';
+import { getBezierPath, getMarkerEnd, Position, getEdgeCenter, ArrowHeadType } from 'react-flow-renderer';
+import { useEdge } from '../../hooks/useEdge';
+
+import "./styles.scss";
 
 type Props = {
     id: string;
     sourceX: number;
+    sourceId: number;
     sourceY: number;
     targetX: number;
     targetY: number;
     sourcePosition: Position;
     targetPosition: Position;
-    markerEnd: string | undefined;
+    markerEndId: string | undefined;
     data: {
         text: string
-    }
+    },
+    arrowHeadType: ArrowHeadType;
 
 }
 
@@ -26,8 +31,13 @@ export function CustomEdge({
   sourcePosition,
   targetPosition,
   data,
-  markerEnd,
+  arrowHeadType,
+  markerEndId
 }: Props) {
+  const {onForceChange} = useEdge();
+
+  const foreignObjectSize = 40;
+  const [value, setValue] = useState(1);
   const edgePath = getBezierPath({
     sourceX,
     sourceY,
@@ -36,7 +46,27 @@ export function CustomEdge({
     targetY,
     targetPosition,
   });
+  const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
+  const [edgeCenterX, edgeCenterY] = getEdgeCenter({
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+  });
 
+  function onChangeValue(){
+    if(value < 3){
+      setValue(value + 1);
+    };
+  };
+
+  const forceToConnection = {
+    connectionId: id,
+    force: value
+  };
+
+  useEffect(() => {onForceChange(forceToConnection)}, [value]);
+  
   return (
     <>
       <path
@@ -45,12 +75,21 @@ export function CustomEdge({
         d={edgePath}
         markerEnd={markerEnd}
       />
-     
-        <body>
-          <button className="edgebutton" onClick={(event) => console.log(event, id)}>
-            oaisaosoi
+      <foreignObject
+        width={foreignObjectSize}
+        height={foreignObjectSize}
+        x={edgeCenterX - foreignObjectSize / 2}
+        y={edgeCenterY - foreignObjectSize / 2}
+        className="edgebutton-foreignobject"
+        requiredExtensions="http://www.w3.org/1999/xhtml"
+      >
+          <button
+            className="custom-button"
+            onClick={() => onChangeValue()}
+          >
+           {value} 
           </button>
-        </body>
-    </>
+    </foreignObject>
+  </>
   );
 }
