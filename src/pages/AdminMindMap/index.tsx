@@ -79,7 +79,7 @@ export function AdminMindMap(){
     function onConnect(params: any){
         const elementsAlterated = elements;
         const test = addEdge(Object.assign(params,
-             {label:"I", labelBgPadding: [8, 4], type: 'buttonedge', }), elementsAlterated!);
+             {type: 'buttonedge', }), elementsAlterated!);
         setElements(test as any);
         setMapActual(test);
     };

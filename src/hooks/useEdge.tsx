@@ -29,6 +29,8 @@ function EdgeProvider({ children }: AuthProviderProps) {
     const [connectionForce, setConnectionForce] = useState<forceData []>([]);
     const [emailSelected, setEmailSelected] = useState<string | null>('');
 
+    console.log(mapActual)
+
     function onForceChange(obj: forceData){
       const cfEditable = connectionForce;
       const isEdition = cfEditable.findIndex(item => item.connectionId === obj.connectionId);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
-import {getDocs, query, where, addDoc} from 'firebase/firestore';
+import firestore, {getDocs, query, where, addDoc, deleteDoc, doc} from 'firebase/firestore';
 import './styles.scss';
 import { finishedMapRef, mindMapRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
@@ -32,6 +32,16 @@ type initialData = {
 
 }[];
 
+type ChangePositionData = {
+    screenX: number;
+    screenY: number;
+    path: [];
+    target: {
+        children:  {
+            props: string
+        }
+    }
+}
 
 export function MindMap(){
 
@@ -73,19 +83,42 @@ export function MindMap(){
 
     const history = useHistory();
 
-    function onFinishMap(){
-        addDoc(finishedMapRef, {
+    async function onFinishMap(){
+       const docRef = doc(mindMapRef, words![0].id);
+
+       await addDoc(finishedMapRef, {
             map: elements,
             force: connectionForce,
             user
         });
-        history.push('/finished/')
+        
+        deleteDoc(docRef);
+        
+        history.push('/finished/');
+    };
+
+    function onChangePosition(changed: ChangePositionData | any){
+        const elementsEditable = elements; 
+        const x = changed.screenX/2;
+        const y = changed.screenY/2 ;
+        const idToChange = changed.target.children[0].outerHTML.split('<div data-nodeid=')[1].split(' ')[0].split('"')[1];
+
+        const findIndexToEdit = elementsEditable.findIndex(item => item.id === idToChange);
+
+        if(findIndexToEdit !== -1){
+            elementsEditable[findIndexToEdit].position.x = x;
+            elementsEditable[findIndexToEdit].position.y = y;
+
+            console.log(elementsEditable)
+            setElements(elementsEditable);
+        };
+
     };
 
     return(
         <div className='mindmapContainer'>
             <ReactFlow
-            
+            onNodeDragStop={(item) => onChangePosition(item)}
             edgeTypes={edgeTypes}
             onLoad={onLoad} 
             elements={elements!} 

@@ -71,7 +71,7 @@ export function CustomEdge({
   useEffect(() => {onForceChange(forceToConnection)}, [value]);
 
   const strokeAndColor = value === 1 ? {stroke: '#861012', strokeWidth: value+1} : value === 2 ? {stroke: '#ac111b', strokeWidth: value+1} : {stroke: '#e21e35', strokeWidth: value+1};
-  
+
   return (
     <>
       <path
