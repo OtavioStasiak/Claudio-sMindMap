@@ -76,15 +76,16 @@ export function CustomAdminEdge({
 
     let findForce = data?.find(item => item.connectionId === id);
 
-    console.log(data, findForce)
     setForce(findForce?.force!)
   }
 
   useEffect(() => {verifyForce()}, [words, emailSelected]);
-  
+  const strokeAndColor = force === 1 ? {stroke: '#861012', strokeWidth: force+1} : force === 2 ? {stroke: '#ac111b', strokeWidth: force+1} : {stroke: '#e21e35', strokeWidth: force+1};
+
   return (
     <>
       <path
+        style={strokeAndColor}
         id={id}
         className="react-flow__edge-path"
         d={edgePath}

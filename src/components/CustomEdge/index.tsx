@@ -18,7 +18,9 @@ type Props = {
         text: string
     },
     arrowHeadType: ArrowHeadType;
-
+    style: {
+      stroke: string;
+    }
 }
 
 
@@ -32,7 +34,8 @@ export function CustomEdge({
   targetPosition,
   data,
   arrowHeadType,
-  markerEndId
+  markerEndId,
+  style
 }: Props) {
   const {onForceChange} = useEdge();
 
@@ -66,10 +69,13 @@ export function CustomEdge({
   };
 
   useEffect(() => {onForceChange(forceToConnection)}, [value]);
+
+  const strokeAndColor = value === 1 ? {stroke: '#861012', strokeWidth: value+1} : value === 2 ? {stroke: '#ac111b', strokeWidth: value+1} : {stroke: '#e21e35', strokeWidth: value+1};
   
   return (
     <>
       <path
+        style={strokeAndColor}
         id={id}
         className="react-flow__edge-path"
         d={edgePath}
