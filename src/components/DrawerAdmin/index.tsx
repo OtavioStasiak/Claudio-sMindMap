@@ -49,7 +49,7 @@ export function DrawerAdmin(){
             <p className="title-button">Home</p>
         </button>
 
-        <button onClick={handleNavigateToUsers} className="drawer-button">
+        {/* <button onClick={handleNavigateToUsers} className="drawer-button">
             <GroupIcon sx={{ color: "white" }} />
             <p className="title-button">Participantes</p>
         </button>
@@ -62,7 +62,7 @@ export function DrawerAdmin(){
         <button onClick={handleNavigateToMap} className="drawer-button">
             <PsychologyIcon  sx={{ color: "white" }} />
             <p className="title-button">Criar um mapa</p>
-        </button>
+        </button> */}
       </div>
 
         <button onClick={handleLogOut} className="bottom-button">

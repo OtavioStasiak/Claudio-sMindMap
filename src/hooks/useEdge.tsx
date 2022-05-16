@@ -13,6 +13,8 @@ type AuthContextData = {
     mapActual: Elements<any>;
     onForceChange: (force: forceData) => void;
     connectionForce: forceData[];
+    emailSelected: string | null;
+    setEmailSelected: (email: string | null) => void;
   };
 
   type AuthProviderProps = {
@@ -25,7 +27,7 @@ function EdgeProvider({ children }: AuthProviderProps) {
 
     const [mapActual, setMapActual] = useState([] as Elements);
     const [connectionForce, setConnectionForce] = useState<forceData []>([]);
-    
+    const [emailSelected, setEmailSelected] = useState<string | null>('');
 
     function onForceChange(obj: forceData){
       const cfEditable = connectionForce;
@@ -47,7 +49,9 @@ function EdgeProvider({ children }: AuthProviderProps) {
           setMapActual,
           mapActual,
           onForceChange,
-          connectionForce
+          connectionForce,
+          setEmailSelected,
+          emailSelected
         }}>
           {children}
         </AuthContext.Provider>

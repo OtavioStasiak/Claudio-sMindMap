@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
-import {getDocs, query, where, addDoc} from 'firebase/firestore';
+import {getDocs, query, where, updateDoc, collection, addDoc} from 'firebase/firestore';
 import './styles.scss';
 import { finishedMapRef, mindMapRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { CustomEdge } from '../../components/CustomEdge';
 import { useEdge } from '../../hooks/useEdge';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { CustomAdminEdge } from '../../components/CustomAdminEdge';
 
 const width = 50%window.innerWidth;
 const height = 50%window.innerHeight;
@@ -32,31 +33,47 @@ type initialData = {
 
 }[];
 
+export type itemData = {
+    id: string;
+    force?: [{connectionId: string, force: number}];
+    map?: [any];
+    user?: {
+        id: string;
+        email: string;
+        avatar: string;
+        name: string;
+    }
+}
 
-export function MindMap(){
+type Params = {
+    email: string;
+}
+export function AdminMindMap(){
 
-    const {user} = useAuth();
     const {setMapActual, connectionForce} = useEdge();
 
-    const [words, setWords] = useState<initialData>();
+    const {email} = useParams<Params>();
 
+    const [words, setWords] = useState<itemData []>([]);
+ 
     async function fetchElements(){
-        const q = query(mindMapRef, where("user", '==', user.email));
+        const q = query(finishedMapRef, where("user.email", '==', email));
         const response = await getDocs(q);
 
         const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
-        setWords(data);
+        setWords(data); 
     };
     
     useEffect(() => {fetchElements()}, []);
 
+
     const [elements, setElements] = useState(initialElements);
-    const initialMap = words !== undefined ? words[0]?.initialMap : [];
+    const initialMap = words !== undefined ? words[0]?.map : [];
 
     useEffect(() => {setElements(initialMap as any)}, [words]);
 
     const edgeTypes = {
-        buttonedge: CustomEdge,
+        buttonedge: CustomAdminEdge,
     };
 
     function onConnect(params: any){
@@ -73,27 +90,22 @@ export function MindMap(){
 
     const history = useHistory();
 
-    function onFinishMap(){
-        addDoc(finishedMapRef, {
-            map: elements,
-            force: connectionForce,
-            user
-        });
-        history.push('/finished/')
-    };
+    function onReturn(){
+        history.push('/admin/')
+    }
 
     return(
         <div className='mindmapContainer'>
             <ReactFlow
             edgeTypes={edgeTypes}
             onLoad={onLoad} 
-            elements={elements!} 
+            elements={elements} 
             onConnect={onConnect} > 
                 <MiniMap /> 
                 <Controls />
             </ReactFlow>  
-            <button onClick={onFinishMap} className='continue-button'>
-                CONTINUAR
+            <button onClick={onReturn}  className='continue-button'>
+                Voltar
             </button> 
         </div>
     )

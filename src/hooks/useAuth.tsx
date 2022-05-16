@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { addDoc, query, where, getDocs } from 'firebase/firestore';
 
 
-type userData = {
+export type userData = {
   id: string;
   name: string;
   avatar: string;
