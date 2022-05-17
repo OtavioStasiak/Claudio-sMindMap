@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
-import firestore, {getDocs, query, where, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
+import {getDocs, query, where, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 import './styles.scss';
 import { finishedMapRef, mindMapRef, usersRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { CustomEdge } from '../../components/CustomEdge';
 import { useEdge } from '../../hooks/useEdge';
 import { useHistory } from 'react-router-dom';
+import Modal from "react-modal";
 
 const width = 50%window.innerWidth;
 const height = 50%window.innerHeight;
@@ -17,6 +18,7 @@ const initialElements = [
 type initialData = {
     id: string;
     user?: string;
+    brand?: string;
     initialMap?: [
         {
         id: string;
@@ -45,6 +47,8 @@ type ChangePositionData = {
 
 export function MindMap(){
 
+    const [visible, setVisible] = useState(true);
+
     const {user} = useAuth();
     const {setMapActual, connectionForce, mapActual, hasDeleted, setHasDeleted} = useEdge();
 
@@ -58,13 +62,11 @@ export function MindMap(){
   
         setWords(data);
     };
-    
-    useEffect(() => {fetchElements()}, []);
-
 
     const [elements, setElements] = useState(initialElements);
     const initialMap = words !== undefined ? words[0]?.initialMap?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position} : item) : [];
 
+    useEffect(() => {fetchElements()}, []);
     useEffect(() => {setElements(initialMap as any)}, [words]);
 
     const edgeTypes = {
@@ -86,7 +88,7 @@ export function MindMap(){
     const history = useHistory();
 
     async function onFinishMap(){
-       const docRef = doc(mindMapRef, words![0].id);
+        const docRef = doc(mindMapRef, words![0].id);
         const elementsEditable = elements;
         const wordsInitial = words !== undefined ? words[0].initialMap![0] : {id: "",
             data: {
@@ -99,10 +101,13 @@ export function MindMap(){
 
         elementsEditable[0] = wordsInitial;
 
+       const brand = words !== undefined && words[0].brand;
+       
        await addDoc(finishedMapRef, {
             map: elementsEditable,
             force: connectionForce,
-            user
+            user,
+            brand: brand
         });
         
         const q = query(usersRef ,where("email", "==", user.email));
@@ -130,7 +135,6 @@ export function MindMap(){
             elementsEditable[findIndexToEdit].position.x = x;
             elementsEditable[findIndexToEdit].position.y = y;
 
-            console.log(elementsEditable)
             setElements(elementsEditable);
         };
 
@@ -144,20 +148,46 @@ export function MindMap(){
         }
     }, [mapActual, hasDeleted]);
 
+    function onOk(){
+        setVisible(false); 
+        fetchElements();
+    };
+
+
+    window.onpopstate = function(){
+        const docRef = doc(mindMapRef, words![0].id);
+
+        deleteDoc(docRef);
+    }
     return(
         <div className='mindmapContainer'>
+             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
+               <div className='instruction'>
+                    <p>Para a construção do Mapa Mental você pode arrastar as palavras pela tela, 
+                        deixando as que tenham maior peso mais próximas da marca. Você também pode conectar as palavras entre elas. 
+                        Além disso ao conectar palavras na marca ou palavras entre elas, você pode dar um peso mais forte pra essa conexão, 
+                        clicando no número:<br/>
+                        (1 - conexão fraca, 2 - conexão média e 3 - conexão forte).</p>
+                    <button onClick={onOk}>
+                        Ok, vamos lá!
+                    </button>
+                </div>
+            </Modal>
+           { visible === false  &&
             <ReactFlow
-            onNodeDragStop={(item) => onChangePosition(item)}
-            edgeTypes={edgeTypes}
-            onLoad={onLoad} 
-            elements={elements!} 
-            onConnect={onConnect} > 
-                <MiniMap /> 
-                <Controls />
-            </ReactFlow>  
+                onNodeDragStop={(item) => onChangePosition(item)}
+                edgeTypes={edgeTypes}
+                onLoad={onLoad} 
+                elements={elements!} 
+                onConnect={onConnect} > 
+                    <MiniMap /> 
+                    <Controls />
+                </ReactFlow> 
+            } 
             <button onClick={onFinishMap} className='continue-button'>
                 CONTINUAR
             </button> 
+           
         </div>
     )
 }

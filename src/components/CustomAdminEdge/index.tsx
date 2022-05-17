@@ -1,4 +1,4 @@
-import { getDocs, query, where } from 'firebase/firestore';
+import { doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { getBezierPath, getMarkerEnd, Position, getEdgeCenter, ArrowHeadType } from 'react-flow-renderer';
 import { useEdge } from '../../hooks/useEdge';
@@ -58,23 +58,24 @@ export function CustomAdminEdge({
     targetY,
   });
 
-  const [words, setWords] = useState<itemData []>([]);
+  const [words, setWords] = useState<any []>([]);
 
   async function fetchForce(){
-    const q = query(finishedMapRef, where("user.email", '==', emailSelected));
-    const response = await getDocs(q);
+    const q = doc(finishedMapRef, emailSelected!);
+    const response = await getDoc(q);
 
-    const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
-    setWords(data); 
+   setWords(response.get('force'))
   };
 
   useEffect(() => {fetchForce()}, [emailSelected]);
 
+
+
   const [force, setForce] = useState(0)
   async function verifyForce(){
-    const data = words[0].force;
+    const data = words;
 
-    let findForce = data?.find(item => item.connectionId === id);
+    let findForce = data.find(item => item.connectionId === id);
 
     setForce(findForce?.force!)
   }

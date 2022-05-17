@@ -25,15 +25,14 @@
             border-radius: 50%;
             align-items: center;
             justify-content: center;
-            padding-top: 2.3%;
-            padding-left: 1%;
-            margin-right: 5px;
-            
+            display: flex; 
+            margin-right: 15px;           
             >p {
                 color: #fff;
                 font-weight: bold;
                 text-align: center;
-                font-size: 20px
+                font-size: 20px;
+                margin-left: 3px
             };
         };
 
@@ -131,8 +130,8 @@
             background: #ebebeb;
             transition: 0.2s;
             >img{
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 72px;
             border-radius: 5px;
             };
             filter: grayscale(100%);
@@ -152,7 +151,7 @@
 
 .new-words{
     width: 400px;
-    height: 400px;
+    height: 450px;
     border-radius: 5px;
     background: #fff;
     display: flex;
@@ -160,9 +159,11 @@
     align-items: center;
     justify-content: flex-start;
     
-    >h2{
-        font-size: 20px;
+    >p{
+        font-size: 14px;
+        font-weight: bold;
         margin: 20px 0px 10px 0px;
+        padding-left: 19px
     };
 
     >input{

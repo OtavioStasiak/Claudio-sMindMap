@@ -15,7 +15,7 @@ export function FinalScreen(){
                 width={400}
                 />
             <h2>Teste Finalizado com Sucesso!</h2>
-            <span>Obrigado pela sua contribuição, e até a proxima!</span>
+            <span>Seu Mapa Mental foi enviado, agradeço a sua disponibilidade em participar dessa dinâmica.</span>
         </div>
     )
 }

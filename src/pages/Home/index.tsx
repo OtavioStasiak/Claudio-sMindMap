@@ -13,7 +13,7 @@ import unimedImg from '../../assets/images/unimed-logo.png';
 import './styles.scss';
 import { useAuth } from '../../hooks/useAuth';
 
-type wordsData = {
+export type wordsData = {
     id: string;
     brand?: string;
     logo?: string;
@@ -35,15 +35,21 @@ export function Home(){
     const [word4, setWord4] = useState("");
     const [word5, setWord5] = useState("");
 
-    function onSelectSicredi(brand: string){
+    function onSelectBrand(brand: string){
         fetchWords(brand);
         setVisible(false);
     };
 
-    function onSelectUnimed(brand: string){
-        fetchWords(brand);
-        setVisible(false);
+    const [brands, setBrands] = useState<wordsData>();
+
+    async function fetchBrands(){
+        const response = await getDocs(wordsRef);
+        const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
+
+        setBrands(data);
     };
+
+    useEffect(() => {fetchBrands()}, []);
 
     const [words, setWords] = useState<wordsData>();
 
@@ -103,10 +109,11 @@ export function Home(){
         }});
 
         const finalElements = initialElements.concat(...lastElements);
-
+        const brand = words !== undefined && words[0].brand;
         await addDoc(mindMapRef, {
             user: user.email,
-            initialMap: finalElements
+            initialMap: finalElements,
+            brand: brand
         });
 
         history.push('/mind-map/');
@@ -124,8 +131,7 @@ export function Home(){
                    <p>1º</p> 
                 </div>
 
-                <p className="description">Selecione as Palavras para criar o mapa mental.</p>
-
+                <p className="description">Para a criação do Mapa Mental você deve escolher as palavras que acredita que tenham maior sinergia com a marca,<br/> clicando nos retângulos abaixo. Não existe limite, pode escolher quantas quiser e não é necessários utilizar todas,<br/> escolha somente aquelas que realmente façam sentido na sua visão.</p>
             </div>
 
             <div className='word-field'>
@@ -158,20 +164,23 @@ export function Home(){
                     <h2 className='selection-brand-title'>Escolha uma Marca:</h2>
 
                     <div className='buttons-select-brand'>
-                        <button onClick={() => onSelectSicredi('Sicredi')} className='button-brand-select'>
-                            <img src={sicrediImg} alt='Logo do Banco Sicredi' />
-                        </button>
 
-                        <button onClick={() => onSelectUnimed('Unimed')} className='button-brand-select'>
-                            <img className='unimed'  src={unimedImg} alt='Logo do Plano de Saúde Unimed' />
-                        </button>
+                        { brands !== undefined &&
+                          brands.map((item, index) =>
+                            <button onClick={() => onSelectBrand(item.brand!)} className='button-brand-select'>
+                                <img src={item.logo} alt={item.brand} />
+                            </button>
+                          )
+                        }
+
                     </div>
                 </div>
             </Modal>
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={go}>
                <div className='new-words'>
-                    <h2>Deseja adicionar alguma outra palavra?</h2>
+                    <p>Existe alguma palavra que não esteja na lista anterior e que acredita que tenha alinhamento com a marca?<br/>
+                     Adicione até 5 palavras que queira. Caso não ache necessário, clique em continuar.</p>
                    
                     <input placeholder='Palavra 1...' onChange={(event) => setWord1(event.target.value)}/>
                     <input placeholder='Palavra 2...' onChange={(event) => setWord2(event.target.value)}/>

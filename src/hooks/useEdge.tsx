@@ -22,7 +22,6 @@ type AuthContextData = {
   type AuthProviderProps = {
     children: React.ReactNode;
   };
-
 export const AuthContext = createContext({} as AuthContextData);
 
 function EdgeProvider({ children }: AuthProviderProps) {
@@ -30,7 +29,6 @@ function EdgeProvider({ children }: AuthProviderProps) {
     const [mapActual, setMapActual] = useState([] as Elements);
     const [connectionForce, setConnectionForce] = useState<forceData []>([]);
     const [emailSelected, setEmailSelected] = useState<string | null>('');
-
 
     function onForceChange(obj: forceData){
       const cfEditable = connectionForce;

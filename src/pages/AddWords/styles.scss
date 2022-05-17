@@ -148,3 +148,91 @@
   };
 
 };
+
+.word-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 100px;
+  >span{
+    color: #fff;
+    font-size: 20px;
+  };
+
+  >input{
+    width: 400px;
+    height: 45px;
+    border: transparent;
+    border-radius: 3px;
+    padding-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  };
+
+  >h2{
+    color: #fff;
+    margin-top: 30px;
+    font-size: 30px;
+  };
+
+  >button{
+    width: 200px;
+    height: 50px;
+    border-radius: 3px;
+    margin-top: 20px;
+    background: #ba181b;
+    border: transparent;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 50px;
+    cursor: pointer;
+  }
+
+}
+
+.obs{
+  background: #000;
+  padding: 8px;
+  border-radius: 4px;
+  >strong{
+    color: #ba181b;
+  }
+}
+
+.bottom-div{
+  flex-direction: row;
+  display: flex;
+  margin-top: 20px;
+}
+
+.actual-brands{
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  width: 100px;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  margin: 0px 15px;
+
+  >img{
+    width: 80px;
+    height: 60px;  
+  };
+
+}
+
+ .delete-brand{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: transparent;
+    cursor: pointer;
+
+    >img{
+      width: 20px;
+      height: 20px;
+    }
+ }

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
-import {getDocs, query, where, updateDoc, collection, addDoc} from 'firebase/firestore';
+import {getDocs, query, where, updateDoc, collection, addDoc, doc, getDoc} from 'firebase/firestore';
 import './styles.scss';
 import { finishedMapRef, mindMapRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
@@ -35,6 +35,7 @@ type initialData = {
 
 export type itemData = {
     id: string;
+    brand?:string;
     force?: [{connectionId: string, force: number}];
     map?: [any];
     user?: {
@@ -54,21 +55,19 @@ export function AdminMindMap(){
 
     const {email} = useParams<Params>();
 
-    const [words, setWords] = useState<itemData []>([]);
+    const [words, setWords] = useState<any []>([]);
  
     async function fetchElements(){
-        const q = query(finishedMapRef, where("user.email", '==', email));
-        const response = await getDocs(q);
-
-        const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
-        setWords(data); 
+        const q = doc(finishedMapRef, email);
+        const response = await getDoc(q);
+        setWords(response.get("map"))
     };
     
     useEffect(() => {fetchElements()}, []);
 
 
     const [elements, setElements] = useState(initialElements);
-    const initialMap = words !== undefined ? words[0]?.map?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position} : item) : [];
+    const initialMap = words !== undefined ? words.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position} : item) : [];
 
     useEffect(() => {setElements(initialMap as any)}, [words]);
 

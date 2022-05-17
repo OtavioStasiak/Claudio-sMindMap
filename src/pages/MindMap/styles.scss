@@ -43,3 +43,33 @@
     width: 80px;
     height: 60px;
  }
+
+ .instruction{
+    width: 400;
+    height: 350px;
+    border-radius: 5px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    >p{
+       text-align: center;
+       font-weight: bold;
+    };
+
+    >button{
+       margin-top: 20px;
+       width: 180px;
+       height: 50px;
+       border-radius: 5px;
+       background: #660708;
+       border: transparent;
+       align-items: center;
+       justify-content: center;
+       display: flex ;
+       color: #fff;
+       cursor: pointer;
+       font-weight: bold;
+    };
+ };

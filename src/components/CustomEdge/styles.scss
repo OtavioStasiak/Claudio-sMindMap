@@ -6,8 +6,8 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    background: #c4c4c4 !important;
-    color: #000;
+    background: #ac111b !important;
+    color: #fff;
     cursor: pointer;
 }
 
@@ -18,8 +18,8 @@
 }
 
 .delete-button{
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     align-items: center;
     border: transparent;
     justify-content: center;
@@ -28,10 +28,10 @@
     background-color: #c4c4c4 !important;
     position: absolute;
     top: 1px;
-    left: 40px;
+    left: 30px;
     cursor: pointer;
     >img{
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     }
 }
