@@ -68,7 +68,7 @@ export function AdminMindMap(){
 
 
     const [elements, setElements] = useState(initialElements);
-    const initialMap = words !== undefined ? words[0]?.map : [];
+    const initialMap = words !== undefined ? words[0]?.map?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position} : item) : [];
 
     useEffect(() => {setElements(initialMap as any)}, [words]);
 

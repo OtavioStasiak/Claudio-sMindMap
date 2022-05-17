@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getBezierPath, getMarkerEnd, Position, getEdgeCenter, ArrowHeadType } from 'react-flow-renderer';
 import { useEdge } from '../../hooks/useEdge';
-
+import deleteIcon from "../../assets/images/delete.svg";
 import "./styles.scss";
 
 type Props = {
@@ -37,7 +37,7 @@ export function CustomEdge({
   markerEndId,
   style
 }: Props) {
-  const {onForceChange} = useEdge();
+  const {onForceChange, mapActual, setMapActual, setHasDeleted} = useEdge();
 
   const foreignObjectSize = 40;
   const [value, setValue] = useState(1);
@@ -61,6 +61,9 @@ export function CustomEdge({
     if(value < 3){
       setValue(value + 1);
     };
+    if(value === 3){
+      setValue(1);
+    }
   };
 
   const forceToConnection = {
@@ -72,6 +75,18 @@ export function CustomEdge({
 
   const strokeAndColor = value === 1 ? {stroke: '#861012', strokeWidth: value+1} : value === 2 ? {stroke: '#ac111b', strokeWidth: value+1} : {stroke: '#e21e35', strokeWidth: value+1};
 
+  function EditActualMap(){
+    const mapEditable = mapActual;
+    const edgeIndex = mapEditable.findIndex(item => item.id === id);
+
+    if(edgeIndex > -1){
+      const mapEdited = mapEditable.filter(item => item.id !== id);
+
+      setMapActual(mapEdited);
+      setHasDeleted(true);
+    };
+  };
+
   return (
     <>
       <path
@@ -82,10 +97,10 @@ export function CustomEdge({
         markerEnd={markerEnd}
       />
       <foreignObject
-        width={foreignObjectSize}
+        width={foreignObjectSize +40}
         height={foreignObjectSize}
         x={edgeCenterX - foreignObjectSize / 2}
-        y={edgeCenterY - foreignObjectSize / 2}
+        y={edgeCenterY - foreignObjectSize /2}
         className="edgebutton-foreignobject"
         requiredExtensions="http://www.w3.org/1999/xhtml"
       >
@@ -95,6 +110,9 @@ export function CustomEdge({
           >
            {value} 
           </button>
+          <button onClick={() => EditActualMap()} className="delete-button">
+            <img src={deleteIcon} />
+          </button> 
     </foreignObject>
   </>
   );

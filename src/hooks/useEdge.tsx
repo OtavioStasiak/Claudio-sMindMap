@@ -15,6 +15,8 @@ type AuthContextData = {
     connectionForce: forceData[];
     emailSelected: string | null;
     setEmailSelected: (email: string | null) => void;
+    hasDeleted: boolean;
+    setHasDeleted: (hasDeleted: boolean) => void;
   };
 
   type AuthProviderProps = {
@@ -29,7 +31,6 @@ function EdgeProvider({ children }: AuthProviderProps) {
     const [connectionForce, setConnectionForce] = useState<forceData []>([]);
     const [emailSelected, setEmailSelected] = useState<string | null>('');
 
-    console.log(mapActual)
 
     function onForceChange(obj: forceData){
       const cfEditable = connectionForce;
@@ -45,6 +46,8 @@ function EdgeProvider({ children }: AuthProviderProps) {
       };
     };
 
+    const [hasDeleted, setHasDeleted] = useState(false);
+
     return (
         <AuthContext.Provider 
         value={{
@@ -53,7 +56,9 @@ function EdgeProvider({ children }: AuthProviderProps) {
           onForceChange,
           connectionForce,
           setEmailSelected,
-          emailSelected
+          emailSelected,
+          setHasDeleted,
+          hasDeleted
         }}>
           {children}
         </AuthContext.Provider>

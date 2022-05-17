@@ -46,7 +46,7 @@ type ChangePositionData = {
 export function MindMap(){
 
     const {user} = useAuth();
-    const {setMapActual, connectionForce} = useEdge();
+    const {setMapActual, connectionForce, mapActual, hasDeleted, setHasDeleted} = useEdge();
 
     const [words, setWords] = useState<initialData>();
 
@@ -55,13 +55,15 @@ export function MindMap(){
         const response = await getDocs(q);
 
         const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
+  
         setWords(data);
     };
     
     useEffect(() => {fetchElements()}, []);
 
+
     const [elements, setElements] = useState(initialElements);
-    const initialMap = words !== undefined ? words[0]?.initialMap : [];
+    const initialMap = words !== undefined ? words[0]?.initialMap?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position} : item) : [];
 
     useEffect(() => {setElements(initialMap as any)}, [words]);
 
@@ -85,9 +87,20 @@ export function MindMap(){
 
     async function onFinishMap(){
        const docRef = doc(mindMapRef, words![0].id);
+        const elementsEditable = elements;
+        const wordsInitial = words !== undefined ? words[0].initialMap![0] : {id: "",
+            data: {
+                label: ""
+            },
+            position: {
+                x: 0,
+                y: 0
+            }};
+
+        elementsEditable[0] = wordsInitial;
 
        await addDoc(finishedMapRef, {
-            map: elements,
+            map: elementsEditable,
             force: connectionForce,
             user
         });
@@ -114,6 +127,14 @@ export function MindMap(){
         };
 
     };
+
+    useEffect(() => {
+        if(hasDeleted === true){
+            setElements(mapActual as any);
+            setHasDeleted(false);
+            return;
+        }
+    }, [mapActual, hasDeleted]);
 
     return(
         <div className='mindmapContainer'>

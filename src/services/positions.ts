@@ -165,5 +165,35 @@ export const positions =    [
             x: -350,
             y: 0
         },
+    },
+    {
+        position: {
+            x: -350,
+            y: -50
+        },
+    },
+    {
+        position: {
+            x: -350,
+            y: -100
+        },
+    },
+    {
+        position: {
+            x: -350,
+            y: -150
+        },
+    },
+    {
+        position: {
+            x: 450,
+            y: 100
+        },
+    },
+    {
+        position: {
+            x: 450,
+            y: 150
+        },
     }
 ]
