@@ -20,7 +20,7 @@ function App() {
           <Switch>
             <Route path={'/'} exact component={Login} />
             <Route path={'/select-words/'} component={Home} />
-            <Route exact path={'/admin/'} component={Admin} />
+            <Route exact path={'/admin/1hsai5Dsuha10Jc7y428xc/'} component={Admin} />
             <Route exact path={'/admin/adminmindmap/:email'} component={AdminMindMap} />
             <Route exact path={'/admin/addwords/'} component={AddWords} />
             <Route exact path={'/finished/'} component={FinalScreen} />

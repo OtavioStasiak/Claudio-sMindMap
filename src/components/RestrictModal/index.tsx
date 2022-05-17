@@ -21,8 +21,8 @@ export function RestrictModal({visible, onRequestClose}: Props){
 
     function onLogin(){
         signInWithEmailAndPassword(auth, email, password)
-        .then(() => {history.push('/admin/');})
-        .catch((error) => console.log(error));
+        .then(() => {history.push('/admin/1hsai5Dsuha10Jc7y428xc/');})
+        .catch((error) => {});
     };
     
     return(
