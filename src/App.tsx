@@ -9,6 +9,7 @@ import { AuthProvider } from './hooks/useAuth';
 import { EdgeProvider } from './hooks/useEdge';
 import { FinalScreen } from './pages/FinalScreen';
 import { AdminMindMap } from './pages/AdminMindMap';
+import { AddWords } from './pages/AddWords';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
             <Route path={'/select-words/'} component={Home} />
             <Route exact path={'/admin/'} component={Admin} />
             <Route exact path={'/admin/adminmindmap/:email'} component={AdminMindMap} />
+            <Route exact path={'/admin/addwords/'} component={AddWords} />
             <Route exact path={'/finished/'} component={FinalScreen} />
             <Route path={'/mind-map/'} component={MindMap} />
             <Route exact path={'/admin/users/'} component={Users} />

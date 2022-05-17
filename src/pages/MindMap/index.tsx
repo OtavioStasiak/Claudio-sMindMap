@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import ReactFlow, {addEdge, MiniMap, Controls  } from 'react-flow-renderer';
-import firestore, {getDocs, query, where, addDoc, deleteDoc, doc} from 'firebase/firestore';
+import firestore, {getDocs, query, where, addDoc, deleteDoc, doc, updateDoc} from 'firebase/firestore';
 import './styles.scss';
-import { finishedMapRef, mindMapRef } from '../../services/firebase';
+import { finishedMapRef, mindMapRef, usersRef } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { CustomEdge } from '../../components/CustomEdge';
 import { useEdge } from '../../hooks/useEdge';
@@ -105,10 +105,18 @@ export function MindMap(){
             user
         });
         
+        const q = query(usersRef ,where("email", "==", user.email));
+        const fetchDocID = getDocs(q);
+        const data = (await fetchDocID).docs.map((item) => {return{id: item.id, ...item.data()}});
+        const userDocRef = doc(usersRef, data[0].id);
+
+        updateDoc(userDocRef,{hasMap: 1});
+        
         deleteDoc(docRef);
         
         history.push('/finished/');
     };
+
 
     function onChangePosition(changed: ChangePositionData | any){
         const elementsEditable = elements; 

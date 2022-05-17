@@ -83,19 +83,26 @@ export function Home(){
         position: positions[index].position
     }});
 
-    const finalElements = initialElements.concat(...otherElements);
 
    async function handleGoToMindMap(){
-       const wordSelectedEditable = wordSelected.concat(...[word1,word2,word3,word4,word5]);
+       const newWords = [];
+       word1 !== "" && newWords.push(word1);
+       word2 !== "" && newWords.push(word2);
+       word3 !== "" && newWords.push(word3);
+       word4 !== "" && newWords.push(word4);
+       word5 !== "" && newWords.push(word5);
+
+       const wordSelectedEditable = wordSelected.concat(...newWords);
+       
        const lastElements = wordSelectedEditable.map((item, index) => {return{
         id: (index + 2).toString(),
         data: {
             label: item
         },
         position: positions[index].position
-    }});
+        }});
 
-    const finalElements = initialElements.concat(...lastElements);
+        const finalElements = initialElements.concat(...lastElements);
 
         await addDoc(mindMapRef, {
             user: user.email,

@@ -2,7 +2,7 @@ import { Drawer } from "@mui/material";
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PsychologyIcon from '@mui/icons-material/Psychology';
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
@@ -20,7 +20,7 @@ export function DrawerAdmin(){
     };
 
     function handleNavigateToMap(){
-      history.push('/mind-map/');
+      history.push('/admin/addwords/');
     };
 
     function handleNavigateToUsers(){
@@ -57,12 +57,12 @@ export function DrawerAdmin(){
         <button className="drawer-button">
             <AccountTreeIcon sx={{ color: "white" }} />
             <p className="title-button">Mapas</p>
-        </button>
+        </button>*/}
 
         <button onClick={handleNavigateToMap} className="drawer-button">
-            <PsychologyIcon  sx={{ color: "white" }} />
-            <p className="title-button">Criar um mapa</p>
-        </button> */}
+            <AddBoxIcon  sx={{ color: "white" }} />
+            <p className="title-button">Adicionar Marca</p>
+        </button> 
       </div>
 
         <button onClick={handleLogOut} className="bottom-button">

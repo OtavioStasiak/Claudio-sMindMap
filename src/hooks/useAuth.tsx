@@ -6,15 +6,15 @@ import { addDoc, query, where, getDocs } from 'firebase/firestore';
 
 
 export type userData = {
-  id: string;
   name: string;
   avatar: string;
   email: string | null;
+  hasMap: number;
 }
 
 type AuthContextData = {
     signInWithGoogle: () => void;
-    user: {id: string, name: string, avatar: string, email: string | null};
+    user: { name: string, avatar: string, email: string | null};
   };
 
   type AuthProviderProps = {
@@ -35,17 +35,17 @@ function AuthProvider({ children }: AuthProviderProps) {
         const result = await signInWithPopup(auth, provider);
               
         if(result.user) {
-            const {displayName, photoURL, uid, email} = result.user;
+            const {displayName, photoURL, email} = result.user;
 
             if(!displayName || !photoURL) {
                 throw new Error('Missing information from Google Account.');
             };
 
             setUser({
-                id: uid,
                 name: displayName,
                 avatar: photoURL,
-                email: email
+                email: email,
+                hasMap: 0
             });
             const q = query(usersRef, where("email", '==', result.user.email));
             const response = await getDocs(q);
@@ -53,30 +53,33 @@ function AuthProvider({ children }: AuthProviderProps) {
 
             if(data.length === 0 ){
               addDoc(usersRef, {
-                id: uid,
                 name: displayName,
                 avatar: photoURL,
-                email: email
+                email: email,
+                hasMap: 0
               }).then(() => history.push('/select-words/'))
             }
            
             history.push('/select-words/')
         };
       } ;
-       
+
+
+      
+
       useEffect(() => {const unsubscribe = auth.onAuthStateChanged(user => {
         if (user){
-          const {displayName, photoURL, uid, email} = user;
+          const {displayName, photoURL, email} = user;
 
           if(!displayName || !photoURL) {
             throw new Error('Missing information from Google Account.');
         };
 
         setUser({
-            id: uid,
             name: displayName,
             avatar: photoURL,
-            email: email
+            email: email,
+            hasMap: 0
         });
         
         return () => {
@@ -84,6 +87,8 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
         }
       })}, []);
+
+
  
     return (
         <AuthContext.Provider 
