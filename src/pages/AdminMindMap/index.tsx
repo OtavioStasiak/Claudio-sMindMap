@@ -8,6 +8,7 @@ import { CustomEdge } from '../../components/CustomEdge';
 import { useEdge } from '../../hooks/useEdge';
 import { useHistory, useParams } from 'react-router-dom';
 import { CustomAdminEdge } from '../../components/CustomAdminEdge';
+import { CustomNode } from '../../components/CustomNode';
 
 const width = 50%window.innerWidth;
 const height = 50%window.innerHeight;
@@ -90,12 +91,17 @@ export function AdminMindMap(){
     const history = useHistory();
 
     function onReturn(){
-        history.push('/admin/')
+        history.push('/admin/1hsai5Dsuha10Jc7y428xc/')
     }
+
+    const nodeTypes = {
+        special: CustomNode,
+    };
 
     return(
         <div className='mindmapContainer'>
             <ReactFlow
+            nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             onLoad={onLoad} 
             elements={elements} 

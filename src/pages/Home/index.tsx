@@ -78,13 +78,14 @@ export function Home(){
     const height = 50%window.innerHeight;
     
     const initialElements = [
-        { id: '1', data: { label: words !== undefined ? words[0]?.logo : ''}, position:{x: width, y: height} },
+        { id: '1', data: { label: words !== undefined ? words[0]?.logo : ''},type: "special", position:{x: width, y: height} },
     ];    
 
     const otherElements = wordSelected.map((item, index) => {return{
         id: (index + 2).toString(),
         data: {
-            label: item
+            label: item,
+            type: "special"
         },
         position: positions[index].position
     }});
@@ -102,6 +103,7 @@ export function Home(){
        
        const lastElements = wordSelectedEditable.map((item, index) => {return{
         id: (index + 2).toString(),
+        type: "special",
         data: {
             label: item
         },

@@ -8,6 +8,7 @@ import { CustomEdge } from '../../components/CustomEdge';
 import { useEdge } from '../../hooks/useEdge';
 import { useHistory } from 'react-router-dom';
 import Modal from "react-modal";
+import { CustomNode } from '../../components/CustomNode';
 
 const width = 50%window.innerWidth;
 const height = 50%window.innerHeight;
@@ -152,6 +153,10 @@ export function MindMap(){
         setVisible(false); 
     };
 
+    const nodeTypes = {
+        special: CustomNode,
+    };
+
 
     window.onpopstate = function(){
         const docRef = doc(mindMapRef, words![0].id);
@@ -194,7 +199,8 @@ export function MindMap(){
                 edgeTypes={edgeTypes}
                 onLoad={onLoad} 
                 elements={elements!} 
-                onConnect={onConnect} > 
+                onConnect={onConnect} 
+                nodeTypes={nodeTypes}> 
                     <MiniMap /> 
                     <Controls />
                 </ReactFlow> 
