@@ -150,7 +150,6 @@ export function MindMap(){
 
     function onOk(){
         setVisible(false); 
-        fetchElements();
     };
 
 
@@ -158,16 +157,32 @@ export function MindMap(){
         const docRef = doc(mindMapRef, words![0].id);
 
         deleteDoc(docRef);
-    }
+    };
+    
     return(
         <div className='mindmapContainer'>
              <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
                <div className='instruction'>
-                    <p>Para a construção do Mapa Mental você pode arrastar as palavras pela tela, 
-                        deixando as que tenham maior peso mais próximas da marca. Você também pode conectar as palavras entre elas. 
-                        Além disso ao conectar palavras na marca ou palavras entre elas, você pode dar um peso mais forte pra essa conexão, 
-                        clicando no número:<br/>
-                        (1 - conexão fraca, 2 - conexão média e 3 - conexão forte).</p>
+                    <h1>MAPA MENTAL</h1>
+
+                    <div>
+                        INSTRUÇÕES
+                    </div>
+
+                    <span>
+                      Para a construção do Mapa Mental você pode arrastar as<br/>palavras pela tela para organizá-las.
+                    </span>
+
+                    <ul>
+                      <li>Deixe as palavras que considera mais importantes<br/>próximas da marca.</li>
+                      <li>Para criar as conexões entre as palavras e a marca, clique<br/>na bolinha preta (em baixo ou em cima da palavra) e<br/>arraste até a bolinha preta da marca ou de outra palavra.</li>
+                      <li>Você não precisa conectar todas as palavras diretamente<br/>na marca.</li>
+                      <li>Você também pode conectar uma palavra a outra,<br/>criando uma conexão segundária (mais longe da marca).</li>
+                      <li>Após conectar uma palavra (na marca ou à outra palavra)<br/>irá aparecer uma linha com um número.</li>
+                      <li>Após a conexão você pode dar um peso maior para essa<br/>conexão clicando no número:<br/>1 - conexão fraca;<br/>2 - conexão média;<br/>3 - conexão forte.</li>
+                      <li>Caso precise apagar a conexão clique na lixeira ao lado<br/>do número.</li>
+                    </ul>
+                   
                     <button onClick={onOk}>
                         Ok, vamos lá!
                     </button>
@@ -184,9 +199,15 @@ export function MindMap(){
                     <Controls />
                 </ReactFlow> 
             } 
-            <button onClick={onFinishMap} className='continue-button'>
-                CONTINUAR
-            </button> 
+            <div className='bottom-map'>
+                <button onClick={() => setVisible(true)} className='continue-button'>
+                 REVER INSTRUÇÕES 
+                </button>
+                <button onClick={onFinishMap} className='continue-button'>
+                 FINALIZAR MAPA
+                </button> 
+            </div>
+            
            
         </div>
     )

@@ -27,7 +27,8 @@
    font-weight: bold;
    font-size: 20px;
    width: 150px;
-   height: 50px;
+   margin-right: 20px;
+   height: 60px;
    border-radius: 5px;
    margin-bottom: 5px;
    cursor: pointer;
@@ -45,17 +46,43 @@
  }
 
  .instruction{
-    width: 400;
-    height: 350px;
-    border-radius: 5px;
+    width: 550px;
+    height: 750px;
+    border-radius: 2px;
     background: #fff;
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
-    >p{
-       text-align: center;
+    padding-top: 10px;
+    
+    >h1{
+      color: #660708;
+      font-size: 35px;
+    };
+
+    >ul{
+       >li{
+          font-weight: bold;
+          margin-bottom: 15px;
+       }
+    }
+
+    >div{
+       background: #660708;
+       color: #fff;
        font-weight: bold;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       width: 85%;
+       height: 50px;
+       font-size: 20px;
+    }
+
+    >p{
+      text-align: center;
+      font-weight: bold;
     };
 
     >button{
@@ -73,3 +100,15 @@
        font-weight: bold;
     };
  };
+
+ .bottom-map{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    >button{
+       width: 250px !important;
+    }
+    
+ }

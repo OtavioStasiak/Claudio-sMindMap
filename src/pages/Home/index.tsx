@@ -26,7 +26,7 @@ export function Home(){
     const history = useHistory();
     const { user } = useAuth(); 
     const [wordsSelected, setWordsSelected] = useState(0);
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
 
     const [go, setGo] = useState(false);    
     const [word1, setWord1] = useState("");
@@ -119,6 +119,12 @@ export function Home(){
         history.push('/mind-map/');
     };
     
+    const [instuctions, setInstructions] = useState(true);
+
+    function onFirstContinueClick(){
+        setInstructions(false);
+        setVisible(true);
+    };
 
     return(
         <div className="container">
@@ -126,12 +132,7 @@ export function Home(){
             <h1>Bem Vindo(a)!</h1>
 
             <div className="title">
-
-                <div className="circleIndicator">
-                   <p>1º</p> 
-                </div>
-
-                <p className="description">Para a criação do Mapa Mental você deve escolher as palavras que acredita que tenham maior sinergia com a marca,<br/> clicando nos retângulos abaixo. Não existe limite, pode escolher quantas quiser e não é necessários utilizar todas,<br/> escolha somente aquelas que realmente façam sentido na sua visão.</p>
+                <p className="description">Escolha as palavras abaixo, clicando nos retângulos. Após escolher todas que queira, clique em continuar.</p>
             </div>
 
             <div className='word-field'>
@@ -159,6 +160,29 @@ export function Home(){
 
             </footer>
 
+            <Modal overlayClassName="react-modal-overlay" className="react-modal-content" isOpen={instuctions}>
+                <div className='first-instruction'>
+                    <h2>Bem Vindo(a)!</h2>
+
+                    <div>
+                        INSTRUÇÕES
+                    </div>
+
+                    <p>Para a criação do Mapa Mental você deve escolher, na próxima<br/>
+                      tela, as palavras que tenham maior relação com a marca.</p>
+
+                    <ul>
+                        <li>Não existe limite, escolha quantas palavras quiser.</li>
+                        <li>Nao é necessário utilizar todas as palavras.</li>
+                        <li>Escolha somente aquelas que façam sentido na<br/>sua visão sobre a marca.</li>
+                    </ul>
+
+                    <button onClick={() => onFirstContinueClick()}>
+                        Continuar
+                    </button>
+                </div>
+            </Modal>
+
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
                <div className='selection-brand'>
                     <h2 className='selection-brand-title'>Escolha uma Marca:</h2>
@@ -179,8 +203,8 @@ export function Home(){
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={go}>
                <div className='new-words'>
-                    <p>Existe alguma palavra que não esteja na lista anterior e que acredita que tenha alinhamento com a marca?<br/>
-                     Adicione até 5 palavras que queira. Caso não ache necessário, clique em continuar.</p>
+                    <p>Existe alguma palavra que não esteja na lista anterior e você<br/> acredita que tenha alinhamento com a marca?</p>
+                    <p><strong>Adicione até 5 palavras digitando nos espaços abaixo e<br/>depois clique em continuar. Caso não ache necessário,<br/>clique diretamente em continuar.</strong></p>
                    
                     <input placeholder='Palavra 1...' onChange={(event) => setWord1(event.target.value)}/>
                     <input placeholder='Palavra 2...' onChange={(event) => setWord2(event.target.value)}/>
@@ -189,11 +213,12 @@ export function Home(){
                     <input placeholder='Palavra 5...' onChange={(event) => setWord5(event.target.value)}/>
 
                     <div>
-                        <button onClick={handleGoToMindMap}>
-                            <p>Continuar</p>
-                        </button>
                         <button onClick={() => setGo(false)}>
                             Cancelar
+                        </button>
+
+                        <button onClick={handleGoToMindMap}>
+                            <p>Continuar</p>
                         </button>
                     </div>
                     <span><strong>OBS: </strong>Você pode adicionar até 5 NOVAS palavras.</span>
