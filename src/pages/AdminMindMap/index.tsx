@@ -98,14 +98,19 @@ export function AdminMindMap(){
         special: CustomNode,
     };
 
+
+    const element = document.getElementsByClassName("react-flow__controls-button react-flow__controls-fitview").namedItem;
+
+
     return(
         <div className='mindmapContainer'>
             <ReactFlow
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
-            onLoad={onLoad} 
+            onLoad={(reactFlowInstance) => onLoad(reactFlowInstance)} 
             elements={elements} 
-            onConnect={onConnect} > 
+            onConnect={onConnect} 
+            defaultZoom={0.5}> 
                 <MiniMap /> 
                 <Controls />
             </ReactFlow>  

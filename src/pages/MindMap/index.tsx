@@ -126,18 +126,25 @@ export function MindMap(){
 
     function onChangePosition(changed: ChangePositionData | any){
         const elementsEditable = elements; 
-        const x = changed.screenX/2;
-        const y = changed.screenY/2 ;
-        const idToChange = changed.target.children[0].outerHTML.split('<div data-nodeid=')[1].split(' ')[0].split('"')[1];
+        const x = changed.screenX * 0.7;
+        const y = changed.screenY * 0.5;
+        const labelToChange = changed.target.innerText;
 
-        const findIndexToEdit = elementsEditable.findIndex(item => item.id === idToChange);
+        const findIndexToEdit = elementsEditable.findIndex(item => item.data.label === labelToChange);
 
         if(findIndexToEdit !== -1){
             elementsEditable[findIndexToEdit].position.x = x;
             elementsEditable[findIndexToEdit].position.y = y;
 
             setElements(elementsEditable);
-        };
+            return;
+        }else{
+            console.log('aqui')
+            elementsEditable[0].position.x = x;
+            elementsEditable[0].position.y = y;
+            setElements(elementsEditable);
+            return;
+        }
 
     };
 

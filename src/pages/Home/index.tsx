@@ -151,7 +151,7 @@ export function Home(){
                 }
             </div>
 
-            <footer className="continue-footer">
+            <div className="continue-footer">
 
                 <h2>Palavras Selecionadas: {wordsSelected}</h2>
 
@@ -160,7 +160,7 @@ export function Home(){
                     <img src={arrowRight} color="#fff" />
                 </button>
 
-            </footer>
+            </div>
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content" isOpen={instuctions}>
                 <div className='first-instruction'>
