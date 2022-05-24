@@ -104,7 +104,7 @@ export function Admin(){
             width={100}
             />
             :
-            users.map((item, index) => 
+           users.map((item, index) => 
                 <div key={index} className="item-admin">
                     <img src={item.avatar} alt="profile-photo" />
                     <div>
@@ -119,9 +119,9 @@ export function Admin(){
                     }
                 </div>)}
 
-            <footer className="footer">
-                <p className="footer-title">Desenvolvido por Otávio Stasiak</p>
-            </footer>
+              
+
+           
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
                 <button type="button" className="modal-profile-button" onClick={() => setVisible(false)}>
                     <img src={closeImg} alt="close-button" className="react-modal-close" /> 

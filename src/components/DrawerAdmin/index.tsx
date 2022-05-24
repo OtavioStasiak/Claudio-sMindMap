@@ -69,6 +69,8 @@ export function DrawerAdmin(){
             <LogoutIcon  sx={{ color: "white "}} />
             <p className="title-button">Sair</p>
         </button>
+
+        <strong className="final-footer">Desenvolvido por Otávio Stasiak</strong>
     
   </Drawer>
     );

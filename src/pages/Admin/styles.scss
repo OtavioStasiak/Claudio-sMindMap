@@ -2,8 +2,8 @@
     background: #161a1d;
     display: flex;
     align-items: center;
-    height: 100vh;
     width: 100%;
+    max-height: 5000px;
       flex-direction: column;
 
     .welcome-header {
@@ -87,8 +87,6 @@
           justify-content: flex-end;
           padding-right: 30px;
           box-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
-          bottom: 0;
-          position: absolute;
 
           .footer-title {
             color: #fff;
@@ -211,4 +209,10 @@
     width: 30px;
     height: 30px;
   }
+}
+
+.last-specialdiv{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }

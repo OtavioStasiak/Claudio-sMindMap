@@ -65,7 +65,7 @@ export function MindMap(){
     };
 
     const [elements, setElements] = useState(initialElements);
-    const initialMap = words !== undefined ? words[0]?.initialMap?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position} : item) : [];
+    const initialMap = words !== undefined ? words[0]?.initialMap?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position, type: "special"} : item) : [];
 
     useEffect(() => {fetchElements()}, []);
     useEffect(() => {setElements(initialMap as any)}, [words]);
