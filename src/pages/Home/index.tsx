@@ -166,7 +166,7 @@ export function Home(){
 
                     <ul>
                         <li>Não existe limite, escolha quantas palavras quiser.</li>
-                        <li>Nao é necessário utilizar todas as palavras.</li>
+                        <li>Não é necessário utilizar todas as palavras.</li>
                         <li>Escolha somente aquelas que façam sentido na<br/>sua visão sobre a marca.</li>
                     </ul>
 

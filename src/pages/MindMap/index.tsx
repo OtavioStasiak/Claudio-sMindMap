@@ -187,9 +187,9 @@ export function MindMap(){
 
                     <ul>
                       <li>Deixe as palavras que considera mais importantes<br/>próximas da marca.</li>
-                      <li>Para criar as conexões entre as palavras e a marca, clique<br/>na bolinha preta (em baixo ou em cima da palavra) e<br/>arraste até a bolinha preta da marca ou de outra palavra.</li>
+                      <li>Para criar as conexões entre as palavras e a marca, clique<br/>na bolinha verde (em baixo ou em cima da palavra) e<br/>arraste até a bolinha verde da marca ou de outra palavra.</li>
                       <li>Você não precisa conectar todas as palavras diretamente<br/>na marca.</li>
-                      <li>Você também pode conectar uma palavra a outra,<br/>criando uma conexão segundária (mais longe da marca).</li>
+                      <li>Você também pode conectar uma palavra a outra,<br/>criando uma conexão secundária (mais longe da marca).</li>
                       <li>Após conectar uma palavra (na marca ou à outra palavra)<br/>irá aparecer uma linha com um número.</li>
                       <li>Após a conexão você pode dar um peso maior para essa<br/>conexão clicando no número:<br/>1 - conexão fraca;<br/>2 - conexão média;<br/>3 - conexão forte.</li>
                       <li>Caso precise apagar a conexão clique na lixeira ao lado<br/>do número.</li>
