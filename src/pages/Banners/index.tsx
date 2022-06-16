@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 
-export function Users(){
+export function Banners(){
 
 
 const rows = [
@@ -39,7 +39,7 @@ const rows = [
         <div className="admin-container">
 
             <header className="welcome-header">
-                <p>Participantes</p>
+                <p>Banners</p>
             </header>
 
             <DrawerAdmin />

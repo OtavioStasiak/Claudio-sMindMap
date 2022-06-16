@@ -6,6 +6,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
+import CollectionsIcon from '@mui/icons-material/Collections';
 
 import './styles.scss';
 import { useHistory } from "react-router-dom";
@@ -16,7 +17,7 @@ export function DrawerAdmin(){
     const history = useHistory();
 
     function handleNavigateToHome(){
-      history.push('/admin/');
+      history.push('/admin/1hsai5Dsuha10Jc7y428xc/');
     };
 
     function handleNavigateToMap(){
@@ -24,7 +25,7 @@ export function DrawerAdmin(){
     };
 
     function handleNavigateToUsers(){
-      history.push('/admin/users');
+      history.push('/admin/banners');
     };
 
     function handleLogOut(){
@@ -49,11 +50,7 @@ export function DrawerAdmin(){
             <p className="title-button">Home</p>
         </button>
 
-        {/* <button onClick={handleNavigateToUsers} className="drawer-button">
-            <GroupIcon sx={{ color: "white" }} />
-            <p className="title-button">Participantes</p>
-        </button>
-
+        {/*
         <button className="drawer-button">
             <AccountTreeIcon sx={{ color: "white" }} />
             <p className="title-button">Mapas</p>
@@ -63,6 +60,12 @@ export function DrawerAdmin(){
             <AddBoxIcon  sx={{ color: "white" }} />
             <p className="title-button">Adicionar Marca</p>
         </button> 
+
+        <button onClick={handleNavigateToUsers} className="drawer-button">
+            <CollectionsIcon sx={{ color: "white" }} />
+            <p className="title-button">Gerenciar Banners</p>
+        </button>
+
       </div>
 
         <button onClick={handleLogOut} className="bottom-button">

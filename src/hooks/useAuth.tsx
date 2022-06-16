@@ -15,6 +15,8 @@ export type userData = {
 type AuthContextData = {
     signInWithGoogle: () => void;
     user: { name: string, avatar: string, email: string | null};
+    brandSearch: string;
+    setBrandSearch: (brand: string) => void;
   };
 
   type AuthProviderProps = {
@@ -27,7 +29,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       const [user, setUser] = useState<userData>({} as userData);
       const history = useHistory();
-    
+      const [brandSearch, setBrandSearch] = useState('');    
 
 
       async function signInWithGoogle() {
@@ -94,7 +96,9 @@ function AuthProvider({ children }: AuthProviderProps) {
         <AuthContext.Provider 
         value={{
           signInWithGoogle,
-          user
+          user,
+          brandSearch,
+          setBrandSearch
         }}>
           {children}
         </AuthContext.Provider>

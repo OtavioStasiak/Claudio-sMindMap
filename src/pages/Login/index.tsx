@@ -1,20 +1,30 @@
 import { LoginButton } from "../../components/LoginButton";
 import Lottie from 'react-lottie';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import animation from '../../animations/login.json';
 import logo from '../../assets/images/logoPuc.png';
 import { useAuth } from "../../hooks/useAuth";
 import './styles.scss';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RestrictModal } from "../../components/RestrictModal";
+import { LGPDModal } from "../../components/LGPDModal";
+
+type Params = {
+    brand: string;
+}
 
 export function Login(){
     const history = useHistory();
-    const { signInWithGoogle, user } = useAuth();
+    const { signInWithGoogle, setBrandSearch } = useAuth();
     const [visible, setVisible] = useState(false);
+    const [lgpdVisible, setLGPDVisible] = useState(false);
+
+    const {brand} = useParams<Params>();
+
+    useEffect(() => {setBrandSearch(brand)}, []);
 
     async function handleLogin(){
-        signInWithGoogle()
+        signInWithGoogle();
     };
 
     function handleLoginAdmin(){
@@ -37,9 +47,9 @@ export function Login(){
                     <h1>Mapa Mental</h1>
                     <span>Pesquisa de Mestrado</span>
                 </div>
-                <LoginButton onClick={handleLogin} title="Entrar com Google" />
+                <LoginButton onClick={() => setLGPDVisible(true)} title="Entrar com Google" />
+                <LGPDModal onAccept={handleLogin} visible={lgpdVisible} onRequestClose={() => setLGPDVisible(false)}/>
                 <LoginButton isAdmin onClick={handleLoginAdmin} title="Acesso Restrito" />
-
                 <RestrictModal visible={visible} onRequestClose={() => setVisible(false)}/>
 
         </div>
