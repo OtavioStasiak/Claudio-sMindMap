@@ -24,7 +24,7 @@ export type wordsData = {
 
 export function Home(){
     const history = useHistory();
-    const { user } = useAuth(); 
+    const { user, brandSearch } = useAuth(); 
     const [wordsSelected, setWordsSelected] = useState(0);
     const [visible, setVisible] = useState(false);
 
@@ -35,32 +35,17 @@ export function Home(){
     const [word4, setWord4] = useState("");
     const [word5, setWord5] = useState("");
 
-    function onSelectBrand(brand: string){
-        fetchWords(brand);
-        setVisible(false);
-    };
-
-    const [brands, setBrands] = useState<wordsData>();
-
-    async function fetchBrands(){
-        const response = await getDocs(wordsRef);
-        const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
-
-        setBrands(data);
-    };
-
-    useEffect(() => {fetchBrands()}, []);
-
     const [words, setWords] = useState<wordsData>();
 
-    async function fetchWords(brand: string){
-        const q = query(wordsRef, where('brand', '==', brand ))
+    async function fetchWords(){
+        const q = query(wordsRef, where('brand', '==', brandSearch ))
         const response = await getDocs(q)
         const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
 
         setWords(data);
     }
 
+    useEffect(() => {fetchWords();}, []);
 
     const [wordSelected, setWordSelected] = useState<string []>([]);
 
@@ -177,20 +162,7 @@ export function Home(){
             </Modal>
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
-               <div className='selection-brand'>
-                    <h2 className='selection-brand-title'>Escolha uma Marca:</h2>
-
-                    <div className='buttons-select-brand'>
-
-                        { brands !== undefined &&
-                          brands.map((item, index) =>
-                            <button onClick={() => onSelectBrand(item.brand!)} className='button-brand-select'>
-                                <img src={item.logo} alt={item.brand} />
-                            </button>
-                          )
-                        }
-
-                    </div>
+                <div>
                 </div>
             </Modal>
 

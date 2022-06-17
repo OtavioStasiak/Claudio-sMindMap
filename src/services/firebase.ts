@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { collection, getFirestore } from "firebase/firestore";
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCo7etbaAAtflplEy44fjr7I8Btu3Ksd3k",
@@ -15,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
+export const storage = getStorage(app);
 export const wordsRef = collection(firestore, "Brand");
 export const usersRef = collection(firestore, "Users");
 export const mindMapRef = collection(firestore, "MindMap");

@@ -1,0 +1,36 @@
+.selection-brand{
+    width: 200px;
+    height: 150px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: grayscale(100%) brightness(.6);
+    transition: filter 0.2s;
+    >img{
+      object-fit: cover;
+      width: 200px;
+      height: 150px;
+    };
+  
+    &:hover{
+      cursor: pointer;
+      filter: grayscale(0%) brightness(1);
+    }
+  }
+  
+  .brand-selected{
+    width: 200px;
+    height: 150px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  
+    >img{
+      object-fit: cover;
+      width: 200px;
+      height: 150px;
+    };
+  }

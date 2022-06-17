@@ -8,52 +8,91 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import closeImg from "../../assets/images/close.svg";
+import {getDocs} from 'firebase/firestore';
 
 import './styles.scss';
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { wordsRef } from "../../services/firebase";
+import { wordsData } from "../Home";
+import { BrandSelectionButton } from "../../components/BrandSelectionButton";
 
 
 export function Banners(){
 
+  const [brandSelected, setBrandSelected] = useState('');
+  const [words, setWords] = useState<wordsData>();
 
-const rows = [
+  async function FetchBrands(){
+      const response = await getDocs(wordsRef);
+      const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
+      setWords(data);
+  };
+
+  useEffect(() => {FetchBrands();}, []);
+
+  function FetchBrandImages(){
+
+
+  };
   
-];
 
+  function HandleUploadImage(brand: string){
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  return(
+      <div className="admin-container">
 
+          <header className="welcome-header">
+              <p>Banners</p>
+          </header>
 
-    return(
-        <div className="admin-container">
+          <DrawerAdmin />
 
-            <header className="welcome-header">
-                <p>Banners</p>
-            </header>
+          <div className="banner-content">
+            <h3>Primeiramente Selecione a marca Desejada</h3>
 
-            <DrawerAdmin />
+            <div>
+              {
+                words?.map((item, index) => 
+                <BrandSelectionButton 
+                 brandSelected={brandSelected} 
+                 onBrandClick={(brand) => setBrandSelected(brand!)} 
+                 key={index} 
+                 brand={item.brand} 
+                 imageURL={item?.logo}
+                  />)
+              }
+            </div>
+            
+            <h3>Agora gerencie os banners</h3>
 
-        
-
-            <div className="user-previews">
+            <div>
 
             </div>
 
-            <footer className="footer">
-                <p className="footer-title">Desenvolvido por Otávio Stasiak</p>
-            </footer>
+            { brandSelected !== '' &&
+              <button onClick={() => HandleUploadImage(brandSelected)}>
+               Fazer Upload
+              </button>
+            }
 
-        </div>
-    )
+            <div>
+              <button>
+                Descartar
+              </button>
+
+              <button>
+                Confirmar
+              </button>
+            </div>
+          </div>
+
+          <footer className="footer">
+              <p className="footer-title">Desenvolvido por Otávio Stasiak</p>
+          </footer>
+
+      </div>
+  )
 }

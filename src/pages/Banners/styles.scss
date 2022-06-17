@@ -60,3 +60,14 @@
         };
     };
 };
+
+.banner-content{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  >h3{
+    color: #fff;
+    font-size: 30px;
+    margin: 30px;
+  }
+}

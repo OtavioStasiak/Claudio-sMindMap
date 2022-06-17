@@ -19,7 +19,7 @@ function App() {
         <AuthProvider>
           <Switch>
             <Route path={'/:brand'} exact component={Login} />
-            <Route path={'/select-words/'} component={Home} />
+            <Route path={'/map/select-words/'} exact component={Home} />
             <Route exact path={'/admin/1hsai5Dsuha10Jc7y428xc/'} component={Admin} />
             <Route exact path={'/admin/adminmindmap/:email'} component={AdminMindMap} />
             <Route exact path={'/admin/addwords/'} component={AddWords} />

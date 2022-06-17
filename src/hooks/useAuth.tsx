@@ -59,10 +59,10 @@ function AuthProvider({ children }: AuthProviderProps) {
                 avatar: photoURL,
                 email: email,
                 hasMap: 0
-              }).then(() => history.push('/select-words/'))
+              }).then(() => history.push('/map/select-words/'))
             }
            
-            history.push('/select-words/')
+            history.push('/map/select-words/')
         };
       } ;
 
