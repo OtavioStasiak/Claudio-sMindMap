@@ -1,26 +1,19 @@
 import { DrawerAdmin } from "../../components/DrawerAdmin";
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import closeImg from "../../assets/images/close.svg";
-import {getDocs} from 'firebase/firestore';
-
-import './styles.scss';
+import {doc, DocumentReference, getDocs} from 'firebase/firestore';
+import {updateDoc} from 'firebase/firestore';
+import {ref, uploadBytes, getDownloadURL, listAll, deleteObject, list } from 'firebase/storage';
 import { useEffect, useState } from "react";
-import { wordsRef } from "../../services/firebase";
+import { wordsRef, storage } from "../../services/firebase";
 import { wordsData } from "../Home";
 import { BrandSelectionButton } from "../../components/BrandSelectionButton";
+import { ImageSelection } from "../../components/ImageSelection";
 
+import './styles.scss';
 
 export function Banners(){
-
+  const [loading, setLoading] = useState(false);
   const [brandSelected, setBrandSelected] = useState('');
+
   const [words, setWords] = useState<wordsData>();
 
   async function FetchBrands(){
@@ -31,15 +24,64 @@ export function Banners(){
 
   useEffect(() => {FetchBrands();}, []);
 
-  function FetchBrandImages(){
-
-
-  };
   
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
 
-  function HandleUploadImage(brand: string){
+  async function HandleUploadImage(brand: string){
+    if(imageUpload === null){
+      return;
+    };
+    const brandId = words?.find((item) => item.brand === brandSelected)?.id;
+    const imageRef = ref(storage, `${brandSelected}/${imageUpload.name}`);
+
+
+    uploadBytes(imageRef, imageUpload)
+    .then((response) => {Test(response.metadata.name)});
 
   };
+
+  async function Test(name: string){
+    const imageListRef = ref(storage, `${brandSelected}/`);
+    const brandDocRef = doc(wordsRef, brandId);
+    const brandDeleteRef = words?.find((item) => item.brand === brandSelected)?.deleteRef;
+
+    const list = await listAll(imageListRef).then((result) => {
+      getDownloadURL(result.items.find(item => item.name === name)!)
+      .then(url => {
+        if(brandDeleteRef!.length <1){
+          updateDoc(brandDocRef, 
+            {deleteRef: [
+              {ref:`${brandSelected}/${name}`,
+              url: url
+          }]}).then(() =>{FetchBrands();}); 
+          return;
+        };
+        updateDoc(brandDocRef, 
+          {deleteRef: [...brandDeleteRef!,
+            {ref:`${brandSelected}/${name}`,
+            url: url
+        }]}).then(() => FetchBrands()); 
+        
+      } )
+    });
+
+
+  };
+
+
+  const name = words?.find(item => item.brand === brandSelected)?.deleteRef;
+  const brandId = words?.find((item) => item.brand === brandSelected)?.id;
+
+  async function DeleteImage(reference: string){
+     const brandDocRef = words !== undefined && doc(wordsRef, brandId);
+     const deleteRef = ref(storage, reference);
+     const deletedArray =  words?.find((item) => item.brand === brandSelected)!.deleteRef?.filter(item => item.ref !== reference);
+
+     await deleteObject(deleteRef).then(() => {});
+     updateDoc(brandDocRef as DocumentReference, 
+      {deleteRef: deletedArray} as object).then(() => FetchBrands());
+
+  }
 
   return(
       <div className="admin-container">
@@ -68,25 +110,28 @@ export function Banners(){
             
             <h3>Agora gerencie os banners</h3>
 
-            <div>
-
+            <div className="images-organize">
+              { words !== undefined && brandSelected !== '' &&
+                words?.find((item) => item.brand === brandSelected)!.deleteRef?.map((item, index) => 
+                 <ImageSelection 
+                  key={index} 
+                  handleDeleteImage={() => DeleteImage(item.ref)}
+                  imageURL={item.url} 
+                  brand={brandSelected} 
+                />)
+              }
             </div>
 
-            { brandSelected !== '' &&
-              <button onClick={() => HandleUploadImage(brandSelected)}>
+            { 
+              brandSelected !== '' &&
+              <>
+              <input type='file' onChange={(event) => setImageUpload(event.target.files![0])} />
+              <button className="upload-button" onClick={() => HandleUploadImage(brandSelected)}>
                Fazer Upload
               </button>
+              </>
             }
 
-            <div>
-              <button>
-                Descartar
-              </button>
-
-              <button>
-                Confirmar
-              </button>
-            </div>
           </div>
 
           <footer className="footer">

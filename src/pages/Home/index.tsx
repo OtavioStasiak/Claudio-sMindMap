@@ -3,12 +3,12 @@ import {useHistory} from 'react-router-dom';
 import { addDoc, query, where } from 'firebase/firestore';
 import { positions } from '../../services/positions';
 import Modal from "react-modal";
-import {firestore, mindMapRef, wordsRef} from '../../services/firebase';
+import {mindMapRef, wordsRef} from '../../services/firebase';
 import { WordSelection } from '../../components/WordSelection';
 import {getDocs} from 'firebase/firestore';
 import arrowRight from '../../assets/images/right-arrow.svg';
-import sicrediImg from '../../assets/images/logo-sicredi.png';
-import unimedImg from '../../assets/images/unimed-logo.png';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import './styles.scss';
 import { useAuth } from '../../hooks/useAuth';
@@ -18,6 +18,8 @@ export type wordsData = {
     brand?: string;
     logo?: string;
     words?: [string];
+    deleteRef?:[{ref: string, url: string}];
+    imagesURL?: [string];
 
 }[];
 
@@ -35,7 +37,7 @@ export function Home(){
     const [word4, setWord4] = useState("");
     const [word5, setWord5] = useState("");
 
-    const [words, setWords] = useState<wordsData>();
+    const [words, setWords] = useState<wordsData >();
 
     async function fetchWords(){
         const q = query(wordsRef, where('brand', '==', brandSearch ))
@@ -94,7 +96,7 @@ export function Home(){
             brand: brand
         });
 
-        history.push('/mind-map/');
+        history.push('/map/mind-map/');
     };
     
     const [instuctions, setInstructions] = useState(true);
@@ -103,6 +105,8 @@ export function Home(){
         setInstructions(false);
         setVisible(true);
     };
+
+    const images = words  !== undefined ? words[0]?.deleteRef : [];
 
     return(
         <div className="container">
@@ -162,7 +166,18 @@ export function Home(){
             </Modal>
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
-                <div>
+                <div className='carousel-div'>
+                    <Carousel autoPlay showArrows width={1100}>
+                        {
+                            images?.map((item, index) => <img className='image-carousel' key={index} src={item.url}/>)
+                        }
+                    </Carousel>
+
+                    <div>
+                        <button type='button' onClick={() => setVisible(false)}>
+                            Vamos Lá!
+                        </button>
+                    </div>
                 </div>
             </Modal>
 

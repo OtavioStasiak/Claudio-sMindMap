@@ -120,7 +120,7 @@ export function MindMap(){
         
         deleteDoc(docRef);
         
-        history.push('/finished/');
+        history.push('/map/finished/');
     };
 
 

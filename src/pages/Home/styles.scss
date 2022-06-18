@@ -270,3 +270,28 @@
     }
 
 }
+
+.carousel-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    >div{
+        >button{
+            border: none;
+            background: #660708;
+            color: #fff;
+            width: 150px;
+            height: 60px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter .2s;
+            &:hover{
+                filter: brightness(.7);
+            }
+        }
+    }
+    
+}

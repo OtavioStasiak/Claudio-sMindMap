@@ -23,8 +23,8 @@ function App() {
             <Route exact path={'/admin/1hsai5Dsuha10Jc7y428xc/'} component={Admin} />
             <Route exact path={'/admin/adminmindmap/:email'} component={AdminMindMap} />
             <Route exact path={'/admin/addwords/'} component={AddWords} />
-            <Route exact path={'/finished/'} component={FinalScreen} />
-            <Route path={'/mind-map/'} component={MindMap} />
+            <Route exact path={'/map/finished/'} component={FinalScreen} />
+            <Route path={'/map/mind-map/'} component={MindMap} />
             <Route exact path={'/admin/banners/'} component={Banners} />
           </Switch>
         </AuthProvider>
