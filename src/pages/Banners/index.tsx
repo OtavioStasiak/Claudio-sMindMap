@@ -36,7 +36,7 @@ export function Banners(){
 
 
     uploadBytes(imageRef, imageUpload)
-    .then((response) => {Test(response.metadata.name)});
+    .then((response) => Test(response.metadata.name));
 
   };
 
@@ -45,10 +45,12 @@ export function Banners(){
     const brandDocRef = doc(wordsRef, brandId);
     const brandDeleteRef = words?.find((item) => item.brand === brandSelected)?.deleteRef;
 
-    const list = await listAll(imageListRef).then((result) => {
+     await listAll(imageListRef).then((result) => {
+      console.log('isHere', brandDeleteRef)
       getDownloadURL(result.items.find(item => item.name === name)!)
       .then(url => {
-        if(brandDeleteRef!.length <1){
+        if(brandDeleteRef?.[0] === undefined){
+          console.log('aqui')
           updateDoc(brandDocRef, 
             {deleteRef: [
               {ref:`${brandSelected}/${name}`,
