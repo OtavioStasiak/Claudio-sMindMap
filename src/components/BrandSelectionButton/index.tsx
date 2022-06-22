@@ -13,20 +13,23 @@ export function BrandSelectionButton({imageURL, brand, onBrandClick, brandSelect
 
     function onSelect(){
         setSelected(!selected);
-        if(selected === true){
+
+        if(selected === false){
             onBrandClick(brand!);
         }else{
-            onBrandClick('');
-        }
+            onBrandClick("");
+        };
+
     };
  
     useEffect(() => {
         if(brandSelected !== brand){
-            setSelected(false)
+            setSelected(false);
         }}, [brandSelected]);
 
+
     return(
-        <button onClick={onSelect} type='button' className={selected ? 'selection-brand' : 'brand-selected'}>
+        <button onClick={onSelect} type='button' className={selected === false ? 'selection-brand' : 'brand-selected'}>
             <img src={imageURL} alt={brand} />
         </button>
     )

@@ -1,9 +1,28 @@
+import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import sucess from '../../animations/success.json';
+import { useAuth } from "../../hooks/useAuth";
+import { wordsData } from "../Home";
+import { addDoc, query, where } from 'firebase/firestore';
+import {getDocs} from 'firebase/firestore';
 
 import './styles.scss';
+import { wordsRef } from "../../services/firebase";
 
 export function FinalScreen(){
+    const {finalText, brandSearch} = useAuth();
+    const [words, setWords] = useState<wordsData >();
+
+    async function fetchWords(){
+        const q = query(wordsRef, where('brand', '==', brandSearch ))
+        const response = await getDocs(q)
+        const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
+
+        setWords(data);
+    }
+
+    useEffect(() => {fetchWords();}, []);
+
     return(
         <div className="finished">
 
@@ -15,7 +34,7 @@ export function FinalScreen(){
                 width={400}
                 />
             <h2>Teste Finalizado com Sucesso!</h2>
-            <span>Seu Mapa Mental foi enviado, agradeço a sua disponibilidade em participar dessa dinâmica.</span>
+            <span>{words !== undefined && words[0].FinalMessage}</span>
         </div>
     )
 }

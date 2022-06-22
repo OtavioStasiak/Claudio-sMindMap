@@ -7,6 +7,8 @@ import { wordsRef, storage } from "../../services/firebase";
 import { wordsData } from "../Home";
 import { BrandSelectionButton } from "../../components/BrandSelectionButton";
 import { ImageSelection } from "../../components/ImageSelection";
+import Lottie from 'react-lottie';
+import load from "../../animations/loading.json";
 
 import './styles.scss';
 
@@ -17,9 +19,11 @@ export function Banners(){
   const [words, setWords] = useState<wordsData>();
 
   async function FetchBrands(){
+      setLoading(true);
       const response = await getDocs(wordsRef);
       const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
       setWords(data);
+      setLoading(false);
   };
 
   useEffect(() => {FetchBrands();}, []);
@@ -36,11 +40,11 @@ export function Banners(){
 
 
     uploadBytes(imageRef, imageUpload)
-    .then((response) => Test(response.metadata.name));
+    .then((response) => AssociateImage(response.metadata.name));
 
   };
 
-  async function Test(name: string){
+  async function AssociateImage(name: string){
     const imageListRef = ref(storage, `${brandSelected}/`);
     const brandDocRef = doc(wordsRef, brandId);
     const brandDeleteRef = words?.find((item) => item.brand === brandSelected)?.deleteRef;
@@ -70,8 +74,6 @@ export function Banners(){
 
   };
 
-
-  const name = words?.find(item => item.brand === brandSelected)?.deleteRef;
   const brandId = words?.find((item) => item.brand === brandSelected)?.id;
 
   async function DeleteImage(reference: string){
@@ -82,8 +84,7 @@ export function Banners(){
      await deleteObject(deleteRef).then(() => {});
      updateDoc(brandDocRef as DocumentReference, 
       {deleteRef: deletedArray} as object).then(() => FetchBrands());
-
-  }
+  };
 
   return(
       <div className="admin-container">
@@ -93,7 +94,17 @@ export function Banners(){
           </header>
 
           <DrawerAdmin />
-
+        { 
+          loading
+          ?
+          <Lottie options={{loop: true, autoplay:true, animationData: load, rendererSettings: {
+                preserveAspectRatio: 'xMidYmid slice'
+            }}}
+            style={{paddingRight:20}}
+            height={100}
+            width={100}
+          />
+          :
           <div className="banner-content">
             <h3>Primeiramente Selecione a marca Desejada</h3>
 
@@ -127,14 +138,15 @@ export function Banners(){
             { 
               brandSelected !== '' &&
               <>
-              <input type='file' onChange={(event) => setImageUpload(event.target.files![0])} />
-              <button className="upload-button" onClick={() => HandleUploadImage(brandSelected)}>
-               Fazer Upload
-              </button>
+                <input className="input-archive" type='file' onChange={(event) => setImageUpload(event.target.files![0])} />
+                <button className="upload-button" onClick={() => HandleUploadImage(brandSelected)}>
+                  Fazer Upload
+                </button>
               </>
             }
 
           </div>
+        }
 
           <footer className="footer">
               <p className="footer-title">Desenvolvido por Otávio Stasiak</p>

@@ -20,13 +20,14 @@ export type wordsData = {
     words?: [string];
     deleteRef?:[{ref: string, url: string}];
     imagesURL?: [string];
+    FinalMessage?: string;
 
 }[];
 
 
 export function Home(){
     const history = useHistory();
-    const { user, brandSearch } = useAuth(); 
+    const { user, brandSearch, setFinalText } = useAuth(); 
     const [wordsSelected, setWordsSelected] = useState(0);
     const [visible, setVisible] = useState(false);
 
@@ -67,7 +68,6 @@ export function Home(){
     const initialElements = [
         { id: '1',type: "special", data: { label: words !== undefined ? words[0]?.logo : ''}, position:{x: width, y: height} },
     ];    
-
 
    async function handleGoToMindMap(){
        const newWords = [];

@@ -7,6 +7,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import CollectionsIcon from '@mui/icons-material/Collections';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 import './styles.scss';
 import { useHistory } from "react-router-dom";
@@ -27,6 +28,10 @@ export function DrawerAdmin(){
     function handleNavigateToUsers(){
       history.push('/admin/banners');
     };
+
+    function handleNavigateToFinalEdit(){
+      history.push('admin/finalmessage/');
+    }
 
     function handleLogOut(){
       history.push('/');
@@ -64,6 +69,11 @@ export function DrawerAdmin(){
         <button onClick={handleNavigateToUsers} className="drawer-button">
             <CollectionsIcon sx={{ color: "white" }} />
             <p className="title-button">Gerenciar Banners</p>
+        </button>
+
+        <button onClick={handleNavigateToFinalEdit} className="drawer-button">
+            <TextSnippetIcon sx={{ color: "white" }} />
+            <p className="title-button">Gerenciar link final</p>
         </button>
 
       </div>
