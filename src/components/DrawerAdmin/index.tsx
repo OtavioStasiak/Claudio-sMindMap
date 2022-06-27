@@ -1,14 +1,12 @@
 import { Drawer } from "@mui/material";
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PsychologyIcon from '@mui/icons-material/Psychology';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-
+import GavelIcon from '@mui/icons-material/Gavel';
 import './styles.scss';
 import { useHistory } from "react-router-dom";
 
@@ -30,8 +28,12 @@ export function DrawerAdmin(){
     };
 
     function handleNavigateToFinalEdit(){
-      history.push('admin/finalmessage/');
-    }
+      history.push('/admin/finalmessage/');
+    };
+
+    function handleNavigateToLGPD(){
+      history.push('/admin/lgpd/');
+    };
 
     function handleLogOut(){
       history.push('/');
@@ -55,11 +57,11 @@ export function DrawerAdmin(){
             <p className="title-button">Home</p>
         </button>
 
-        {/*
-        <button className="drawer-button">
-            <AccountTreeIcon sx={{ color: "white" }} />
-            <p className="title-button">Mapas</p>
-        </button>*/}
+       
+        <button onClick={handleNavigateToLGPD} className="drawer-button">
+            <GavelIcon sx={{ color: "white" }} />
+            <p className="title-button">Gerenciar Texto LGPD</p>
+        </button>
 
         <button onClick={handleNavigateToMap} className="drawer-button">
             <AddBoxIcon  sx={{ color: "white" }} />

@@ -33,7 +33,7 @@ export function FinalScreen(){
                 height={400}
                 width={400}
                 />
-            <h2>Teste Finalizado com Sucesso!</h2>
+            <h2>Teste Finalizado com Sucesso!</h2> 
             <span>{words !== undefined && words[0].FinalMessage}</span>
         </div>
     )

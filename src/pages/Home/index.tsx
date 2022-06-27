@@ -21,7 +21,7 @@ export type wordsData = {
     deleteRef?:[{ref: string, url: string}];
     imagesURL?: [string];
     FinalMessage?: string;
-
+    lgpdBanner?: {title: string; body: string}[]
 }[];
 
 

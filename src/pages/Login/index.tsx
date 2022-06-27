@@ -8,6 +8,9 @@ import './styles.scss';
 import { useEffect, useState } from "react";
 import { RestrictModal } from "../../components/RestrictModal";
 import { LGPDModal } from "../../components/LGPDModal";
+import { wordsData } from "../Home";
+import { getDocs, query, where } from "firebase/firestore";
+import { wordsRef } from "../../services/firebase";
 
 type Params = {
     brand: string;
@@ -20,8 +23,17 @@ export function Login(){
     const [lgpdVisible, setLGPDVisible] = useState(false);
 
     const {brand} = useParams<Params>();
+    const [words, setWords] = useState<wordsData >();
 
-    useEffect(() => {setBrandSearch(brand)}, []);
+    async function fetchWords(){
+        const q = query(wordsRef, where('brand', '==', brand ))
+        const response = await getDocs(q)
+        const data = response.docs.map((item) => {return{id: item.id, ...item.data()}});
+
+        setWords(data);
+    }
+
+    useEffect(() => {fetchWords(); setBrandSearch(brand);}, []);
 
     async function handleLogin(){
         signInWithGoogle();
@@ -30,6 +42,8 @@ export function Login(){
     function handleLoginAdmin(){
         setVisible(true);
     };
+
+    const lgpd = words !== undefined ? words[0].lgpdBanner : [];
 
     return(
         <div id="container">
@@ -48,7 +62,7 @@ export function Login(){
                     <span>Pesquisa de Mestrado</span>
                 </div>
                 <LoginButton onClick={() => setLGPDVisible(true)} title="Entrar com Google" />
-                <LGPDModal onAccept={handleLogin} visible={lgpdVisible} onRequestClose={() => setLGPDVisible(false)}/>
+                <LGPDModal lgpdBanner={lgpd} onAccept={handleLogin} visible={lgpdVisible} onRequestClose={() => setLGPDVisible(false)}/>
                 <LoginButton isAdmin onClick={handleLoginAdmin} title="Acesso Restrito" />
                 <RestrictModal visible={visible} onRequestClose={() => setVisible(false)}/>
 
