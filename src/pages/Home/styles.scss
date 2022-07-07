@@ -295,3 +295,36 @@
     }
     
 }
+
+.welcome-start{
+    width: 500px;
+    height: 300px;
+    border-radius: 5px;
+    background-color: #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    >h2{
+        color: #660708;
+    };
+    >p{
+        font-size: 20px;
+        text-align: center;
+        padding: 15px;
+    };
+    >button{
+        border: none;
+        background: #660708;
+        color: #fff;
+        width: 150px;
+        height: 60px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: filter .2s;
+        &:hover{
+            filter: brightness(.7);
+        };
+    };  
+};

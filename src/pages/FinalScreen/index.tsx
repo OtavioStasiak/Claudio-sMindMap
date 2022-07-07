@@ -33,8 +33,8 @@ export function FinalScreen(){
                 height={400}
                 width={400}
                 />
-            <h2>Teste Finalizado com Sucesso!</h2> 
-            <span>{words !== undefined && words[0].FinalMessage}</span>
+            <h2>Finalizado: Primeira parte da Pesquisa finalizada! Clique no link abaixo para responder as perguntas da segunda parte da pesquisa.</h2> 
+            <a href={words !== undefined ? 'https://' + words[0].FinalMessage : ''} target="_blank" rel="noreferrer">{words !== undefined && words[0].FinalMessage}</a>
         </div>
     )
 }

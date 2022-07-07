@@ -108,6 +108,9 @@ export function Home(){
 
     const images = words  !== undefined ? words[0]?.deleteRef : [];
 
+    const [visualized, setVisualized] = useState(0);
+    const [lastModal, setLastModal] = useState(false);
+
     return(
         <div className="container">
 
@@ -143,8 +146,21 @@ export function Home(){
             </div>
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content" isOpen={instuctions}>
-                <div className='first-instruction'>
+                <div className='welcome-start'>
                     <h2>Bem Vindo(a)!</h2>
+
+                    <p>Antes de começarmos a criação do Mapa Mental peço que dêem uma olhada com atenção nas imagens a seguir.</p>
+                
+                    <button onClick={() => onFirstContinueClick()}>
+                        Ver Imagens
+                    </button>
+                </div>
+            </Modal>
+
+
+            <Modal overlayClassName="react-modal-overlay" className="react-modal-content" isOpen={lastModal}>
+                <div className='first-instruction'>
+                    <h2>Mapa Mental</h2>
 
                     <div>
                         INSTRUÇÕES
@@ -159,7 +175,7 @@ export function Home(){
                         <li>Escolha somente aquelas que façam sentido na<br/>sua visão sobre a marca.</li>
                     </ul>
 
-                    <button onClick={() => onFirstContinueClick()}>
+                    <button onClick={() => setLastModal(false)}>
                         Continuar
                     </button>
                 </div>
@@ -167,16 +183,18 @@ export function Home(){
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
                 <div className='carousel-div'>
-                    <Carousel autoPlay showArrows width={1100}>
+                    <Carousel onChange={(index) => setVisualized(prevState => prevState + index)} autoPlay showArrows width={1100}>
                         {
                             images?.map((item, index) => <img className='image-carousel' key={index} src={item.url}/>)
                         }
                     </Carousel>
 
                     <div>
-                        <button type='button' onClick={() => setVisible(false)}>
-                            Vamos Lá!
-                        </button>
+                        {   visualized > 2 &&
+                            <button type='button' onClick={() => {setVisible(false); setLastModal(true)}}>
+                                Vamos Lá!
+                            </button>
+                        }
                     </div>
                 </div>
             </Modal>
