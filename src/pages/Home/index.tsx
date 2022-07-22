@@ -183,7 +183,7 @@ export function Home(){
 
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
                 <div className='carousel-div'>
-                    <Carousel onChange={(index) => setVisualized(prevState => prevState + index)} autoPlay showArrows width={1100}>
+                    <Carousel onChange={(index) => setVisualized(prevState => prevState + index)} autoPlay showArrows width={'50vw'} dynamicHeight>
                         {
                             images?.map((item, index) => <img className='image-carousel' key={index} src={item.url}/>)
                         }
