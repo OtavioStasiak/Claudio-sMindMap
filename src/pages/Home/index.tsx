@@ -181,7 +181,7 @@ export function Home(){
                 </div>
             </Modal>
 
-            <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
+            <Modal overlayClassName="react-modal-overlayII" className="react-modal-content"  isOpen={visible}>
                 <div className='carousel-div'>
                     <Carousel onChange={(index) => setVisualized(prevState => prevState + index)} autoPlay showArrows width={'50vw'} dynamicHeight>
                         {

@@ -46,8 +46,10 @@
  }
 
  .instruction{
+   position: absolute !important;
+   overflow-y: scroll;
     width: 550px;
-    height: 750px;
+    height: 90vh;
     border-radius: 2px;
     background: #fff;
     display: flex;

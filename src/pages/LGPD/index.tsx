@@ -76,7 +76,7 @@ export function Lgpd(){
             </header>
             <h3>Primeiramente Selecione a marca Desejada</h3>
 
-            <div>
+            <div className="specialII">
               {
                 words?.map((item, index) => 
                 <BrandSelectionButton 

@@ -37,7 +37,7 @@ export function CustomEdge({
   markerEndId,
   style
 }: Props) {
-  const {onForceChange, mapActual, setMapActual, setHasDeleted} = useEdge();
+  const {onForceChange, mapActual, setMapActual, setHasDeleted, connectionForce} = useEdge();
 
   const foreignObjectSize = 40;
   const [value, setValue] = useState(1);
@@ -57,22 +57,36 @@ export function CustomEdge({
     targetY,
   });
 
-  function onChangeValue(){
-    if(value < 3){
-      setValue(value + 1);
-    };
-    if(value === 3){
-      setValue(1);
-    }
-  };
-
+  
   const forceToConnection = {
     connectionId: id,
     force: value
   };
 
-  useEffect(() => {onForceChange(forceToConnection)}, [value]);
+  function onChangeValue(){
+    if(value < 3){
+      setValue(value + 1);
+      onForceChange({connectionId: id, force: value+1})
+    };
+    if(value === 3){
+      setValue(1);
+      onForceChange({connectionId: id, force: 1})
 
+    }
+  };
+
+  useEffect(() => {
+   const item = connectionForce.find((item) => item.connectionId === id);
+   console.log("aquiiii", id, item)
+
+   if(!item?.force){
+    setValue(1);
+    return;
+   };
+
+   setValue(item?.force);
+
+  }, []);
   const strokeAndColor = value === 1 ? {stroke: '#861012', strokeWidth: value+1} : value === 2 ? {stroke: '#ac111b', strokeWidth: value+1} : {stroke: '#e21e35', strokeWidth: value+1};
 
   function EditActualMap(){

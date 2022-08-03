@@ -12,6 +12,7 @@ import { AdminMindMap } from './pages/AdminMindMap';
 import { AddWords } from './pages/AddWords';
 import { FinalMessage } from './pages/FinalMessage';
 import { Lgpd } from './pages/LGPD';
+import { MapsByBrand } from './pages/MapsByBrand';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route exact path={'/admin/1hsai5Dsuha10Jc7y428xc/'} component={Admin} />
             <Route exact path={'/admin/adminmindmap/:email'} component={AdminMindMap} />
             <Route exact path={'/admin/addwords/'} component={AddWords} />
+            <Route exact path={'/admin/mapsbybrand/'} component={MapsByBrand} />
             <Route exact path={'/admin/finalmessage'} component={FinalMessage} />
             <Route exact path={'/admin/lgpd/'} component={Lgpd} />
             <Route exact path={'/admin/banners/'} component={Banners} />

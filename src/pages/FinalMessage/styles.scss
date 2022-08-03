@@ -65,6 +65,12 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  >div{
+    height: 40vh;
+    overflow-y: scroll;
+
+  }
   >h3{
     color: #fff;
     font-size: 30px;

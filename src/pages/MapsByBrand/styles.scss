@@ -2,8 +2,8 @@
     background: #161a1d;
     display: flex;
     align-items: center;
+    height: 100vh;
     width: 100%;
-    max-height: 5000px;
       flex-direction: column;
 
     .welcome-header {
@@ -87,6 +87,8 @@
           justify-content: flex-end;
           padding-right: 30px;
           box-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+          bottom: 0;
+          position: absolute;
 
           .footer-title {
             color: #fff;
@@ -147,107 +149,102 @@
 
 };
 
-.user-modal{
-  width: 450px;
-  height: 700px;
-  background: #fff;
-  border-radius: 5px;
-  align-items: center;
+.word-container{
   display: flex;
-  flex-direction: column;
-  padding-top: 15px;
-  max-height: 700px;
-  padding-bottom: 20px;
-
-  >img{
-    border-radius: 50px;
-  };
-
-  >span{
-    margin-bottom: 50px;
-  }
-
-  >strong{
-    margin-bottom: 25px;
-    font-size: 20px;
-  }
-
-  >div{
-    width: 100%;
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom-color: #0b090a;
-    margin-bottom: 15px;
-    >div{
-      display: flex;
-      flex-direction: column;
-      width: 75%;
-      padding-left: 5%;
-    }
-
-    >button{
-      border: transparent;
-      background: #ba181b;
-      padding: 5px;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  }
-}
-
-.modal-profile-button{
-  background: transparent;
-  border: transparent;
   align-items: center;
   justify-content: center;
-  >img{
-    width: 30px;
-    height: 30px;
+  flex-direction: column;
+  padding-top: 100px;
+  >span{
+    color: #fff;
+    font-size: 20px;
+  };
+
+  >input{
+    width: 400px;
+    height: 45px;
+    border: transparent;
+    border-radius: 3px;
+    padding-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  };
+
+  >h2{
+    color: #fff;
+    margin-top: 30px;
+    font-size: 30px;
+  };
+
+  >button{
+    width: 200px;
+    height: 50px;
+    border-radius: 3px;
+    margin-top: 20px;
+    background: #ba181b;
+    border: transparent;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 50px;
+    cursor: pointer;
+  }
+
+}
+
+.obs{
+  background: #000;
+  padding: 8px;
+  border-radius: 4px;
+  >strong{
+    color: #ba181b;
   }
 }
 
-.last-specialdiv{
-  width: 100%;
+.bottom-div{
+  flex-direction: row;
   display: flex;
-  flex-direction: column;
+  margin-top: 20px;
 }
 
-.superspecial{
-  width: 100%;
-  height: 40vh !important;
-  overflow-y: scroll;
-  flex-direction: column !important;
+.actual-brands{
   display: flex;
+  flex-direction: row;
+  background: #fff;
+  width: 100px;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  margin: 0px 15px;
 
-  >div{
-    width: 120%;
-    height: 90px;
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom-color: #0b090a;
-    margin-bottom: 15px;
-    >div{
+  >img{
+    width: 80px;
+    height: 60px;  
+  };
+
+}
+
+ .delete-brand{
+    width: 7vw;
+    height: 10vh;
+    border-radius: 15px;
+    border: transparent;
+    cursor: pointer;
+    background: transparent;
+    >img{
+      width: 20px;
+      height: 20px;
+    }
+
+    &::hover{
+        transform: scale(1.1);
+    }
+ }
+
+ .list-map{
+      width: 100vw;
       display: flex;
       flex-direction: column;
-      width: 75%;
-      padding-left: 5%;
-    }
-
-    >button{
-      border: transparent;
-      background: #ba181b;
-      padding: 5px;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  }
-}
+      overflow-y: scroll;
+      height: 50vh;
+ }

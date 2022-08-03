@@ -104,7 +104,8 @@ export function Admin(){
             width={100}
             />
             :
-           users.map((item, index) => 
+            <div className="special">
+           {users.map((item, index) => 
                 <div key={index} className="item-admin">
                     <img src={item.avatar} alt="profile-photo" />
                     <div>
@@ -118,8 +119,9 @@ export function Admin(){
                         </button>
                     }
                 </div>)}
+            </div>
+                }
 
-              
 
            
             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
@@ -132,6 +134,7 @@ export function Admin(){
                    <span>{userSelected.email}</span>
 
                    <strong>Mapas:</strong>
+                   <div className="superspecial">
                     {userMaps.map((item) => 
                     <div>
                         <div>
@@ -142,6 +145,7 @@ export function Admin(){
                             Abrir Mapa
                         </button>
                     </div>)}
+                    </div>
                 </div>
             </Modal>
         </div>

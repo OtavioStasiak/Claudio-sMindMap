@@ -66,6 +66,7 @@ export function MindMap(){
 
     const [elements, setElements] = useState(initialElements);
     const initialMap = words !== undefined ? words[0]?.initialMap?.map((item, index) => index === 0 ? {data: {label: <img className='image-central' src={item.data.label}/>}, id: item.id, position: item.position, type: "special"} : item) : [];
+    const initialID = words !== undefined ? words[0]?.id : null;
 
     useEffect(() => {fetchElements()}, []);
     useEffect(() => {setElements(initialMap as any)}, [words]);
@@ -173,8 +174,22 @@ export function MindMap(){
     
     return(
         <div className='mindmapContainer'>
-             <Modal overlayClassName="react-modal-overlay" className="react-modal-content"  isOpen={visible}>
-               <div className='instruction'>
+             
+           
+            {   !visible && 
+                <ReactFlow
+                onNodeDragStop={(item) => onChangePosition(item)}
+                edgeTypes={edgeTypes}
+                onLoad={onLoad} 
+                elements={elements!} 
+                onConnect={onConnect} 
+                nodeTypes={nodeTypes}> 
+                    <MiniMap /> 
+                    <Controls />
+                </ReactFlow> }
+
+                {visible === true &&  
+             <div className='instruction'>
                     <h1>MAPA MENTAL</h1>
 
                     <div>
@@ -199,19 +214,8 @@ export function MindMap(){
                         Ok, vamos lá!
                     </button>
                 </div>
-            </Modal>
-           { visible === false  &&
-            <ReactFlow
-                onNodeDragStop={(item) => onChangePosition(item)}
-                edgeTypes={edgeTypes}
-                onLoad={onLoad} 
-                elements={elements!} 
-                onConnect={onConnect} 
-                nodeTypes={nodeTypes}> 
-                    <MiniMap /> 
-                    <Controls />
-                </ReactFlow> 
-            } 
+            }
+          
             <div className='bottom-map'>
                 <button onClick={() => setVisible(true)} className='continue-button'>
                  REVER INSTRUÇÕES 
@@ -220,7 +224,7 @@ export function MindMap(){
                  FINALIZAR MAPA
                 </button> 
             </div>
-            
+                      
            
         </div>
     )

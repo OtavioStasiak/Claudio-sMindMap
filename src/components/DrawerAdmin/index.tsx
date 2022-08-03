@@ -35,6 +35,10 @@ export function DrawerAdmin(){
       history.push('/admin/lgpd/');
     };
 
+    function handleNavigateToFilterMap(){
+      history.push('/admin/mapsbybrand/');
+    };
+
     function handleLogOut(){
       history.push('/');
     };
@@ -76,6 +80,11 @@ export function DrawerAdmin(){
         <button onClick={handleNavigateToFinalEdit} className="drawer-button">
             <TextSnippetIcon sx={{ color: "white" }} />
             <p className="title-button">Gerenciar link final</p>
+        </button>
+
+        <button onClick={handleNavigateToFilterMap} className="drawer-button">
+            <TextSnippetIcon sx={{ color: "white" }} />
+            <p className="title-button">Mapas Por Marca</p>
         </button>
 
       </div>

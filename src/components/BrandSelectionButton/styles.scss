@@ -4,6 +4,8 @@
     border-radius: 3px;
     display: flex;
     align-items: center;
+    margin-bottom: 1rem;
+    margin-right: 2rem;
     justify-content: center;
     filter: grayscale(100%) brightness(.6);
     transition: filter 0.2s;
@@ -23,6 +25,8 @@
   .brand-selected{
     width: 200px;
     height: 150px;
+    margin-bottom: 1rem;
+    margin-right: 2rem;
     border-radius: 5px;
     display: flex;
     align-items: center;
